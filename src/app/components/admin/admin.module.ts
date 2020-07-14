@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GatherResourcesComponent } from './pages/gather-resources/gather-resources.component';
 import { GatherCraftsComponent } from './pages/gather-crafts/gather-crafts.component';
 import { GatherCuisinesComponent } from './pages/gather-cuisines/gather-cuisines.component';
+import { AdminRoutingModule } from 'src/app/components/admin/admin-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { GatherCuisinesComponent } from './pages/gather-cuisines/gather-cuisines
   GatherCraftsComponent,
   GatherCuisinesComponent],
   imports: [
+    AdminRoutingModule
   ]
 })
 export class AdminModule { }

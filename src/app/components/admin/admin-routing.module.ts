@@ -8,20 +8,27 @@ import { GatherCuisinesComponent } from 'src/app/components/admin/pages/gather-c
 const routes: Routes = [
   {
     path: '',
-    component: AdminComponent
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: AdminComponent
+      },
+      {
+        path: 'resources',
+        component: GatherResourcesComponent
+      },
+      {
+        path: 'crafts',
+        component: GatherCraftsComponent
+      },
+      {
+        path: 'cuisines',
+        component: GatherCuisinesComponent
+      }
+    ]
   },
-  {
-    path: 'resources',
-    component: GatherResourcesComponent
-  },
-  {
-    path: 'crafts',
-    component: GatherCraftsComponent
-  },
-  {
-    path: 'cuisines',
-    component: GatherCuisinesComponent
-  }
+
 ]
 
 @NgModule({
