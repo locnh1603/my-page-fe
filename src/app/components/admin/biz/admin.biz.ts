@@ -21,4 +21,8 @@ export class AdminBiz {
   createResource(newRes: GatherResource) {
     return this.resourceService.create(newRes);
   }
+
+  updateResource(newRes: GatherResource) {
+    return this.resourceService.edit(newRes.name, newRes);
+  }
 }

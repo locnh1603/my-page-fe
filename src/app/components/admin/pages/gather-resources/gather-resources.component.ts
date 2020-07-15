@@ -14,6 +14,7 @@ import Regions from '../../../../../assets/regions.json'
 })
 export class GatherResourcesComponent implements OnInit {
   public addBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
+  public editBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
   public deleteBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
   public selectedResource: GatherResource = new GatherResource();
   public newResource: GatherResource = new GatherResource();
@@ -27,6 +28,7 @@ export class GatherResourcesComponent implements OnInit {
   public categories = ['fish', 'grain', 'mineral', 'jewel','vegetable', 'shellfish', 'unique', 'wheat', 'crustacean','fruit', 'other', 'mollusk']
   public Regions = Regions;
   public AddForm: FormGroup;
+  public EditForm: FormGroup;
   public selectedRegion = null;
 
   constructor(
@@ -39,6 +41,7 @@ export class GatherResourcesComponent implements OnInit {
       this.resources = [...res];
     })
     this.initForm();
+    this.initEditForm();
   }
 
   initForm() {
@@ -53,8 +56,24 @@ export class GatherResourcesComponent implements OnInit {
     })
   }
 
+  initEditForm() {
+    this.EditForm = this.fb.group({
+      name: [this.selectedResource.name ? this.selectedResource.name : ''],
+      type: [this.selectedResource.type ? this.selectedResource.type : ''],
+      category: [this.selectedResource.class ? this.selectedResource.class.category : ''],
+      size: [this.selectedResource.class ? this.selectedResource.class.size : ''],
+      rarity: [this.selectedResource.rarity ? this.selectedResource.rarity : 0],
+      region: [this.selectedResource.region[0] ? this.selectedResource.region[0] : ''],
+      locations: [this.selectedResource.location ? this.selectedResource.location : []]
+    })
+    this.EditForm.get('name').disable();
+    this.selectedRegion = this.selectedResource.region[0];
+    this.onRegionSelect(this.selectedRegion);
+  }
+
   onResourceSelect(res) {
     this.selectedResource = res;
+    this.initEditForm();
     this.detailModal = true;
   }
 
@@ -107,8 +126,32 @@ export class GatherResourcesComponent implements OnInit {
     this.Locations = Locations.filter(loc => loc.region === event);
   }
 
+  onEdit() {
+    this.editBtnState = ClrLoadingState.LOADING
+    const formData = this.EditForm.getRawValue();
+    const newRes: GatherResource = {
+      name: formData.name,
+      rarity: formData.rarity,
+      type: formData.type,
+      class: {
+        category: formData.category,
+        size: formData.size
+      },
+      region: [formData.region],
+      location: [...formData.locations]
+    }
+    this.adminBiz.updateResource(newRes).subscribe(() => {
+      this.editBtnState = ClrLoadingState.SUCCESS,
+      setTimeout(() => {
+        this.closeModal();
+        this.ngOnInit();
+      }, 1000);
+    });
+  }
+
   closeModal() {
     this.detailModal = false;
     this.addModal = false;
+    this.selectedRegion = null;
   }
 }

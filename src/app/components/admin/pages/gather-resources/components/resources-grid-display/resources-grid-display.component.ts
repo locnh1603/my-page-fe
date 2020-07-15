@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { GatherResourcesService } from 'src/app/components/admin/services/gather-resources.service';
+import { GridOptions, GridApi } from 'ag-grid-community';
 
 @Component({
   selector: 'app-resources-grid-display',
@@ -24,12 +25,11 @@ export class ResourcesGridDisplayComponent implements OnInit, OnChanges {
     { headerName: 'Size', field: 'class.size',width: 120 }
   ];
 
-  public gridOptions = {
+  public gridOptions: GridOptions = {
     columnDefs: this.columnDefs,
     defaultColDef: {
       sortable: true
-    },
-    api: null
+    }
   };
 
   rowData = [];
@@ -41,7 +41,9 @@ export class ResourcesGridDisplayComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.rowData = [...this.resources];
-    this.gridOptions.api.setQuickFilter(this.gridFilter);
+    if (this.gridOptions.api) {
+      this.gridOptions.api.setQuickFilter(this.gridFilter);
+    } 
     if (this.gridApi) {this.gridApi.redrawRows(this.rowData);}
   }
 

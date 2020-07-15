@@ -16,17 +16,65 @@
 
 <clr-modal [(clrModalOpen)]="detailModal"
            [clrModalSize]="'lg'"
-           [clrModalClosable]="false">
+           [clrModalClosable]="false"
+           *ngIf="!!selectedResource">
         <h3 class="modal-title">{{selectedResource.name}}</h3>
         <div class="modal-body text-center">
-                <form></form>
+                <form clrForm
+                      clrLayout="horizontal"
+                      [formGroup]="EditForm">
+                        <clr-input-container>
+                                <label>Name</label>
+                                <input clrInput
+                                       type="text"
+                                       formControlName="name"
+                                       required />
+                        </clr-input-container>
+                        <clr-input-container>
+                                <label>Rarity</label>
+                                <input clrInput
+                                       type="number"
+                                       formControlName="rarity"
+                                       required />
+                        </clr-input-container>
+                        <ng-select formControlName="type"
+                                   class="custom">
+                                <ng-option *ngFor="let type of types"
+                                           [value]="type">{{type}}</ng-option>
+                        </ng-select>
+                        <ng-select formControlName="category"
+                                   class="custom">
+                                <ng-option *ngFor="let cat of categories"
+                                           [value]="cat">{{cat}}</ng-option>
+                        </ng-select>
+                        <ng-select formControlName="size"
+                                   class="custom">
+                                <ng-option *ngFor="let size of sizes"
+                                           [value]="size">{{size}}</ng-option>
+                        </ng-select>
+                        <ng-select formControlName="region"
+                                   class="custom"
+                                   (change)="onRegionSelect($event)">
+                                <ng-option *ngFor="let region of Regions"
+                                           [value]="region.name">{{region.name}}</ng-option>
+                        </ng-select>
+                        <ng-select [multiple]="true"
+                                   formControlName="locations"
+                                   class="custom"
+                                   *ngIf="!!selectedRegion">
+                                <ng-option *ngFor="let location of Locations"
+                                           [value]="location.name">{{location.name}}</ng-option>
+                        </ng-select>
+                </form>
         </div>
         <div class="modal-footer">
                 <button type="button"
                         class="btn btn-outline"
                         (click)="closeModal()">Cancel</button>
                 <button type="button"
-                        class="btn btn-primary">Save</button>
+                        class="btn btn-primary"
+                        [clrLoading]="editBtnState"
+                        (click)="onEdit()">Save</button>
                 <button type="button"
                         class="btn btn-danger"
                         [clrLoading]="deleteBtnState"

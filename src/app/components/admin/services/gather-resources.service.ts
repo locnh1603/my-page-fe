@@ -21,4 +21,8 @@ export class GatherResourcesService {
   create(newRes: GatherResource) {
     return this.http.post(this.url, newRes);
   }
+
+  edit(name: string, newRes: GatherResource) {
+    return this.http.put(`${this.url}/${name}`, newRes);
+  }
 }
