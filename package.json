@@ -3,18 +3,21 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
     "@ag-grid-enterprise/all-modules": "^23.2.1",
     "@angular/animations": "~9.1.9",
+    "@angular/cli": "~9.1.7",
     "@angular/common": "~9.1.9",
     "@angular/compiler": "~9.1.9",
+    "@angular/compiler-cli": "~9.1.9",
     "@angular/core": "~9.1.9",
     "@angular/forms": "~9.1.9",
     "@angular/platform-browser": "~9.1.9",
@@ -30,9 +33,12 @@
     "ag-grid-community": "^23.2.1",
     "ag-grid-enterprise": "^23.2.1",
     "bootstrap": "^4.5.0",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
+    "path": "^0.12.7",
     "rxjs": "^6.5.5",
     "tslib": "^1.10.0",
+    "typescript": "~3.8.3",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
@@ -54,5 +60,9 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
+  },
+  "engines": {
+    "node": "12.16.3",
+    "npm": "6.14.4"
   }
 }

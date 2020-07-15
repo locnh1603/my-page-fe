@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LandingComponent } from 'src/app/components/landing/landing.component';
-import { AdminComponent } from 'src/app/components/admin/admin.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LandingComponent
+    pathMatch: 'full',
+    redirectTo: 'admin/resources'
   },
   {
     path: 'admin',
