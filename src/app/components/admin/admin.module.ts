@@ -5,19 +5,21 @@ import { AdminRoutingModule } from 'src/app/components/admin/admin-routing.modul
 import { GatherResourcesModule } from 'src/app/components/admin/pages/gather-resources/gather-resources.module';
 import { AdminNavigatorModule } from 'src/app/components/navigator/admin-navigator.module';
 import { GatherResourcesService } from 'src/app/components/admin/services/gather-resources.service';
+import { NgxsModule } from '@ngxs/store';
+import { AdminState } from 'src/app/components/admin/state/admin.state';
+import { AdminComponent } from 'src/app/components/admin/admin.component';
 
 @NgModule({
   declarations: [
     GatherCraftsComponent,
-    GatherCuisinesComponent
+    GatherCuisinesComponent,
+    AdminComponent
   ],
   imports: [
     AdminRoutingModule,
     GatherResourcesModule,
-    AdminNavigatorModule
-  ],
-  exports: [
-    AdminNavigatorModule
+    AdminNavigatorModule,
+    NgxsModule.forFeature([AdminState])
   ],
   providers: [
     GatherResourcesService

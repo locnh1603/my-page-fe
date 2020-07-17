@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminBiz } from 'src/app/components/admin/biz/admin.biz';
 import { ClrLoadingState } from '@clr/angular';
 import { GatherResource } from 'src/shared/models/gather-resources.model';
@@ -6,13 +6,15 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { GatheringResourceTypeEnums, GatheringResourceCategoryEnums, GatheringResourceSizeEnums } from 'src/shared/enums/gather-resources.enum';
 import Locations from '../../../../../assets/locations.json';
 import Regions from '../../../../../assets/regions.json'
+import { SafeSubscription } from 'src/shared/models/safe-subscription.model';
 
 @Component({
   selector: 'app-gather-resources',
   templateUrl: './gather-resources.component.html',
-  styleUrls: ['./gather-resources.component.scss']
+  styleUrls: ['./gather-resources.component.scss'],
+  providers: [SafeSubscription]
 })
-export class GatherResourcesComponent implements OnInit {
+export class GatherResourcesComponent implements OnInit, OnDestroy {
   public addBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
   public editBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
   public deleteBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
@@ -33,15 +35,42 @@ export class GatherResourcesComponent implements OnInit {
 
   constructor(
     private adminBiz: AdminBiz,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private safeSub: SafeSubscription
     ) { }
 
   ngOnInit(): void {
-    this.adminBiz.getAllResources().subscribe((res: any[]) => {
-      this.resources = [...res];
-    })
+    this.adminBiz.getAllResources();
+    this.initSubscription();
     this.initForm();
     this.initEditForm();
+  }
+
+  
+  initSubscription() {
+    this.safeSub.subs = [
+      this.adminBiz.resources$.subscribe((res: GatherResource[]) => {
+        this.resources = [...res];
+      }),
+      this.adminBiz.deleteSuccess.subscribe((res) => {
+        this.deleteBtnState = ClrLoadingState.SUCCESS;
+        setTimeout(() => {
+          this.closeModal();
+        }, 1000);
+      }),
+      this.adminBiz.createSuccess.subscribe((res) => {
+        this.addBtnState = ClrLoadingState.SUCCESS,
+        setTimeout(() => {
+          this.closeModal();
+        }, 1000);
+      }),
+      this.adminBiz.editSuccess.subscribe((res) => {
+        this.editBtnState = ClrLoadingState.SUCCESS,
+        setTimeout(() => {
+          this.closeModal();
+        }, 1000);
+      })
+    ]
   }
 
   initForm() {
@@ -81,14 +110,7 @@ export class GatherResourcesComponent implements OnInit {
 
   deleteResource() {
     this.deleteBtnState = ClrLoadingState.LOADING;
-    this.adminBiz.deleteResources(this.selectedResource.name).subscribe((res) =>{
-      console.log(res);
-      this.deleteBtnState = ClrLoadingState.SUCCESS;
-      setTimeout(() => {
-        this.closeModal();
-        this.ngOnInit();
-      }, 1000);
-    })
+    this.adminBiz.deleteResources(this.selectedResource.name);
   }
 
   onAddModal() {
@@ -110,13 +132,7 @@ export class GatherResourcesComponent implements OnInit {
       region: [formData.region],
       location: [...formData.locations]
     }
-    this.adminBiz.createResource(newRes).subscribe(() => {
-      this.addBtnState = ClrLoadingState.SUCCESS,
-      setTimeout(() => {
-        this.closeModal();
-        this.ngOnInit();
-      }, 1000);
-    });
+    this.adminBiz.createResource(newRes);
   }
 
   onRegionSelect(event) {
@@ -144,13 +160,7 @@ export class GatherResourcesComponent implements OnInit {
       region: [formData.region],
       location: [...formData.locations]
     }
-    this.adminBiz.updateResource(newRes).subscribe(() => {
-      this.editBtnState = ClrLoadingState.SUCCESS,
-      setTimeout(() => {
-        this.closeModal();
-        this.ngOnInit();
-      }, 1000);
-    });
+    this.adminBiz.updateResource(newRes);
   }
 
   closeModal() {
@@ -158,4 +168,10 @@ export class GatherResourcesComponent implements OnInit {
     this.addModal = false;
     this.selectedRegion = null;
   }
+
+  ngOnDestroy() {
+    this.closeModal();
+    this.safeSub.unsubscribeAll();
+  }
+
 }
