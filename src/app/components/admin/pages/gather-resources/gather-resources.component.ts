@@ -50,6 +50,7 @@ export class GatherResourcesComponent implements OnInit {
       type: [GatheringResourceTypeEnums.Mining],
       category: [GatheringResourceCategoryEnums.Unique],
       size: [GatheringResourceSizeEnums.Small],
+      url: [''],
       rarity: [0],
       region: [[]],
       locations: [[]]
@@ -62,6 +63,7 @@ export class GatherResourcesComponent implements OnInit {
       type: [this.selectedResource.type ? this.selectedResource.type : ''],
       category: [this.selectedResource.class ? this.selectedResource.class.category : ''],
       size: [this.selectedResource.class ? this.selectedResource.class.size : ''],
+      url: [this.selectedResource.url ? this.selectedResource.url : ''],
       rarity: [this.selectedResource.rarity ? this.selectedResource.rarity : 0],
       region: [this.selectedResource.region[0] ? this.selectedResource.region[0] : ''],
       locations: [this.selectedResource.location ? this.selectedResource.location : []]
@@ -100,6 +102,7 @@ export class GatherResourcesComponent implements OnInit {
       name: formData.name,
       rarity: formData.rarity,
       type: formData.type,
+      url: formData.url,
       class: {
         category: formData.category,
         size: formData.size
@@ -133,6 +136,7 @@ export class GatherResourcesComponent implements OnInit {
       name: formData.name,
       rarity: formData.rarity,
       type: formData.type,
+      url: formData.url,
       class: {
         category: formData.category,
         size: formData.size
