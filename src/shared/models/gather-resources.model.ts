@@ -6,7 +6,7 @@ export class GatherResource
   region: string[];
   location: string[];
   class: GatherResourceClass;
-  url: string;
+  icon: string;
   rarity: number;
   type: GatheringResourceTypeEnums
 
@@ -14,7 +14,7 @@ export class GatherResource
     this.name = '';
     this.location = [];
     this.region = [];
-    this.url = '';
+    this.icon = '';
     this.rarity = 0;
     this.type = GatheringResourceTypeEnums.Mining;
   }
