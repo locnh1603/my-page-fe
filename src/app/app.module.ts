@@ -5,27 +5,28 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LandingComponent } from './components/landing/landing.component';
-import { AdminComponent } from './components/admin/admin.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { LandingQueryDisplayComponent } from './components/landing/components/landing-query-display/landing-query-display.component';
 import { AdminModule } from 'src/app/components/admin/admin.module';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin'
+import { LandingModule } from 'src/app/components/landing/landing.module';
+import { AdminNavigatorModule } from 'src/app/components/navigator/admin-navigator.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LandingComponent,
-    AdminComponent,
-    LandingQueryDisplayComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     AdminModule,
+    LandingModule,
     FormsModule,
     ClarityModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxsModule.forRoot([]),
+    NgxsReduxDevtoolsPluginModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
