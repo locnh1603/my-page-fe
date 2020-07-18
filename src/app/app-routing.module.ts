@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'admin/resources'
+    loadChildren: () => import('./components/landing/landing.module').then(m => m.LandingModule)
   },
   {
     path: 'admin',
