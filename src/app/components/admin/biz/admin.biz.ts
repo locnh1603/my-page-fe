@@ -29,8 +29,8 @@ export class AdminBiz {
     });
   }
 
-  deleteResources(name: string) {
-    this.resourceService.delete(name).subscribe((res: GatherResource) => {
+  deleteResources(id: string) {
+    this.resourceService.delete(id).subscribe((res: GatherResource) => {
       this.dispatcher.fire(new DeleteResourceAction(res));
       this.deleteSuccess.next('delete');
     });
@@ -44,7 +44,7 @@ export class AdminBiz {
   }
 
   updateResource(newRes: GatherResource) {
-    this.resourceService.edit(newRes.name, newRes).subscribe((res: GatherResource) => {
+    this.resourceService.edit(newRes.id, newRes).subscribe((res: GatherResource) => {
       this.dispatcher.fire(new EditResourceAction(res));
       this.editSuccess.next('create');
     });

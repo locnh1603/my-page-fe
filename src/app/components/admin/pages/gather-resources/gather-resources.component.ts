@@ -110,7 +110,7 @@ export class GatherResourcesComponent implements OnInit, OnDestroy {
 
   deleteResource() {
     this.deleteBtnState = ClrLoadingState.LOADING;
-    this.adminBiz.deleteResources(this.selectedResource.name);
+    this.adminBiz.deleteResources(this.selectedResource.id);
   }
 
   onAddModal() {
@@ -121,6 +121,7 @@ export class GatherResourcesComponent implements OnInit, OnDestroy {
     this.addBtnState = ClrLoadingState.LOADING
     const formData = this.AddForm.getRawValue();
     const newRes: GatherResource = {
+      id: '',
       name: formData.name,
       rarity: formData.rarity,
       type: formData.type,
@@ -149,6 +150,7 @@ export class GatherResourcesComponent implements OnInit, OnDestroy {
     this.editBtnState = ClrLoadingState.LOADING
     const formData = this.EditForm.getRawValue();
     const newRes: GatherResource = {
+      id: this.selectedResource.id,
       name: formData.name,
       rarity: formData.rarity,
       type: formData.type,

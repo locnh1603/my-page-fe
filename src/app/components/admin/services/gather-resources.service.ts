@@ -14,15 +14,15 @@ export class GatherResourcesService {
     return this.http.get(this.url);
   }
 
-  delete(name: string) {
-    return this.http.delete(`${this.url}/${name}`);
+  delete(id: string) {
+    return this.http.delete(`${this.url}/${id}`);
   }
 
   create(newRes: GatherResource) {
     return this.http.post(this.url, newRes);
   }
 
-  edit(name: string, newRes: GatherResource) {
-    return this.http.put(`${this.url}/${name}`, newRes);
+  edit(id: string, newRes: GatherResource) {
+    return this.http.put(`${this.url}/${id}`, newRes);
   }
 }
