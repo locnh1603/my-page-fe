@@ -20,6 +20,11 @@ const routes: Routes = [
       {
         path: 'cuisines',
         component: GatherCuisinesComponent
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        component: AdminComponent 
       }
     ]
   },

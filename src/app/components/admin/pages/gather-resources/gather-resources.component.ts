@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminBiz } from 'src/app/components/admin/biz/admin.biz';
 import { ClrLoadingState } from '@clr/angular';
 import { GatherResource } from 'src/shared/models/gather-resources.model';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GatheringResourceTypeEnums, GatheringResourceCategoryEnums, GatheringResourceSizeEnums } from 'src/shared/enums/gather-resources.enum';
 import Locations from '../../../../../assets/locations.json';
 import Regions from '../../../../../assets/regions.json'
@@ -75,27 +75,27 @@ export class GatherResourcesComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.AddForm = this.fb.group({
-      name: [''],
-      type: [GatheringResourceTypeEnums.Mining],
-      category: [GatheringResourceCategoryEnums.Unique],
-      size: [GatheringResourceSizeEnums.Small],
+      name: ['', Validators.required],
+      type: [GatheringResourceTypeEnums.Mining, Validators.required],
+      category: [GatheringResourceCategoryEnums.Unique, Validators.required],
+      size: [GatheringResourceSizeEnums.Small,Validators.required],
       icon: [''],
       rarity: [0],
-      region: [[]],
-      locations: [[]]
+      region: [[], Validators.required],
+      locations: [[], Validators.required]
     })
   }
 
   initEditForm() {
     this.EditForm = this.fb.group({
-      name: [this.selectedResource.name ? this.selectedResource.name : ''],
-      type: [this.selectedResource.type ? this.selectedResource.type : ''],
-      category: [this.selectedResource.class ? this.selectedResource.class.category : ''],
-      size: [this.selectedResource.class ? this.selectedResource.class.size : ''],
+      name: [this.selectedResource.name ? this.selectedResource.name : '', Validators.required],
+      type: [this.selectedResource.type ? this.selectedResource.type : '', Validators.required],
+      category: [this.selectedResource.class ? this.selectedResource.class.category : '', Validators.required],
+      size: [this.selectedResource.class ? this.selectedResource.class.size : '', Validators.required],
       icon: [this.selectedResource.icon ? this.selectedResource.icon : ''],
       rarity: [this.selectedResource.rarity ? this.selectedResource.rarity : 0],
-      region: [this.selectedResource.region[0] ? this.selectedResource.region[0] : ''],
-      locations: [this.selectedResource.location ? this.selectedResource.location : []]
+      region: [this.selectedResource.region[0] ? this.selectedResource.region[0] : '', Validators.required],
+      locations: [this.selectedResource.location ? this.selectedResource.location : [], Validators.required]
     })
     this.EditForm.get('name').disable();
     this.selectedRegion = this.selectedResource.region[0];
@@ -172,6 +172,14 @@ export class GatherResourcesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.closeModal();
     this.safeSub.unsubscribeAll();
+  }
+
+  addFormValid(): boolean {
+    return this.AddForm.valid;
+  }
+
+  editFormValid(): boolean {
+    return this.EditForm.valid;
   }
 
 }
