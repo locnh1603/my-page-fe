@@ -81,6 +81,7 @@
                 <button type="button"
                         class="btn btn-primary"
                         [clrLoading]="editBtnState"
+                        [disabled]="editFormValid()"
                         (click)="onEdit()">Save</button>
                 <button type="button"
                         class="btn btn-danger"
@@ -155,6 +156,7 @@
                 <button type="button"
                         class="btn btn-primary"
                         [clrLoading]="addBtnState"
+                        [disabled]="addFormValid()"
                         (click)="onAdd()">Save</button>
         </div>
 </clr-modal>
