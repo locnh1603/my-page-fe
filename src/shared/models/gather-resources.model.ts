@@ -2,6 +2,7 @@ import { GatheringResourceTypeEnums, GatheringResourceSizeEnums, GatheringResour
 
 export class GatherResource                                                                                                                                                                                                                                                                                                        
 {
+  id: string;
   name: string;
   region: string[];
   location: string[];
@@ -11,6 +12,7 @@ export class GatherResource
   type: GatheringResourceTypeEnums
 
   constructor() {
+    this.id = '';
     this.name = '';
     this.location = [];
     this.region = [];
