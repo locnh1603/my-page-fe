@@ -8,20 +8,22 @@ import { AdminBiz } from 'src/app/components/admin/biz/admin.biz';
 import 'ag-grid-enterprise'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { GatherCraftsComponent } from 'src/app/components/admin/pages/gather-crafts/gather-crafts.component';
+import { CraftsGridDisplayComponent } from './components/crafts-grid-display/crafts-grid-display.component';
 
 @NgModule({
   declarations: [
-    GatherResourcesComponent,
-    ResourcesGridDisplayComponent
+    GatherCraftsComponent,
+    CraftsGridDisplayComponent,
   ],
   imports: [
     ClarityModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AgGridModule.withComponents([ResourcesGridDisplayComponent]),
+    AgGridModule.withComponents([CraftsGridDisplayComponent]),
     NgSelectModule
   ],
   providers: [AdminBiz]
 })
-export class GatherResourcesModule { }
+export class GatherCraftsModule { }

@@ -10,7 +10,6 @@ import { AdminModule } from 'src/app/components/admin/admin.module';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin'
 import { LandingModule } from 'src/app/components/landing/landing.module';
-import { AdminNavigatorModule } from 'src/app/components/navigator/admin-navigator.module';
 
 @NgModule({
   declarations: [

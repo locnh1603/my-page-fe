@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminNavigatorComponent } from './admin-navigator.component';
+import { CraftsGridDisplayComponent } from './crafts-grid-display.component';
 
-describe('AdminNavigatorComponent', () => {
-  let component: AdminNavigatorComponent;
-  let fixture: ComponentFixture<AdminNavigatorComponent>;
+describe('CraftsGridDisplayComponent', () => {
+  let component: CraftsGridDisplayComponent;
+  let fixture: ComponentFixture<CraftsGridDisplayComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminNavigatorComponent ]
+      declarations: [ CraftsGridDisplayComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminNavigatorComponent);
+    fixture = TestBed.createComponent(CraftsGridDisplayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

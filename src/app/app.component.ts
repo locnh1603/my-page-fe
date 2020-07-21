@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,12 +7,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnDestroy, OnInit {
-  constructor(       
+  constructor(
+    private router: Router     
   ) {}
   
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
+  }
+
+  onClick(moduleName) {
+    this.router.navigateByUrl(`/admin${moduleName}`);
   }
 }
