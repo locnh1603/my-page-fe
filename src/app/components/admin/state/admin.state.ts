@@ -1,15 +1,18 @@
 import { GatherResource } from 'src/shared/models/gather-resources.model';
 import { Injectable } from '@angular/core';
 import { State, Action, StateContext } from '@ngxs/store';
-import { StoreResourcesAction, CreateResourceAction, EditResourceAction, DeleteResourceAction } from 'src/app/components/admin/state/admin.action';
+import { StoreResourcesAction, CreateResourceAction, EditResourceAction, DeleteResourceAction, StoreCraftsAction, CreateCraftAction, EditCraftAction, DeleteCraftAction } from 'src/app/components/admin/state/admin.action';
+import { GatherCraft } from 'src/shared/models/gather-craft.model';
 
 
 export class AdminStateModel {
   resources: GatherResource[];
+  crafts: GatherCraft[];
 }
 
 export const defaultState: AdminStateModel = {
-  resources: []
+  resources: [],
+  crafts: []
 }
 
 @State<AdminStateModel>({name: 'admin', defaults: defaultState })
@@ -49,6 +52,42 @@ export class AdminState {
     resources.splice(index, 1);
     ctx.patchState({
       resources: [...resources]
+    })
+  }
+
+  @Action(StoreCraftsAction)
+  storeCraftsAction(ctx: StateContext<AdminStateModel>, action: StoreCraftsAction) {
+    ctx.patchState({
+      crafts: action.crafts
+    })
+  }
+
+  @Action(CreateCraftAction)
+  createCraftAction(ctx: StateContext<AdminStateModel>, action: CreateCraftAction) {
+    const crafts = ctx.getState().crafts;
+    crafts.push(action.craft);
+    ctx.patchState({
+      crafts: [...crafts]
+    })
+  }
+
+  @Action(EditCraftAction)
+  editCraftAction(ctx: StateContext<AdminStateModel>, action: EditCraftAction) {
+    const crafts = ctx.getState().crafts;
+    let index = crafts.findIndex((res: GatherCraft) => res.id === action.craft.id);
+    crafts[index] = action.craft;
+    ctx.patchState({
+      crafts: [...crafts]
+    })
+  }
+
+  @Action(DeleteCraftAction)
+  deleteCraftAction(ctx: StateContext<AdminStateModel>, action: DeleteCraftAction) {
+    const crafts = ctx.getState().crafts;
+    let index = crafts.findIndex((res: GatherCraft) => res.name === action.craft.name);
+    crafts.splice(index, 1);
+    ctx.patchState({
+      crafts: [...crafts]
     })
   }
 }

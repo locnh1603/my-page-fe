@@ -1,5 +1,9 @@
-<ag-grid-angular class="ag-theme-alpine data-grid"
-                 [rowData]="rowData"
-                 [gridOptions]="gridOptions"
-                 (cellClicked)="onCellClicked($event)">
-</ag-grid-angular>
+.data-grid {
+  width: 1350px;
+  height: 600px;
+  margin: 1% 5% 0 5%;
+}
+
+
+
+

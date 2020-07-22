@@ -38,3 +38,10 @@ export enum PSO2ClassEnums {
   hero = 'Hero',
   phantom = 'Phantom'
 }
+
+
+export enum GatherCraftTypeEnums {
+  lring = 'left ring',
+  rring = 'right ring'
+}
+

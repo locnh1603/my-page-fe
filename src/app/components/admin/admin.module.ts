@@ -9,6 +9,7 @@ import { AdminState } from 'src/app/components/admin/state/admin.state';
 import { AdminComponent } from 'src/app/components/admin/admin.component';
 import { GatherCuisinesModule } from 'src/app/components/admin/pages/gather-cuisines/gather-cuisines.module';
 import { GatherCraftsModule } from 'src/app/components/admin/pages/gather-crafts/gather-crafts.module';
+import { GatherCraftsService } from 'src/app/components/admin/services/gather-crafts.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { GatherCraftsModule } from 'src/app/components/admin/pages/gather-crafts
     NgxsModule.forFeature([AdminState])
   ],
   providers: [
-    GatherResourcesService
+    GatherResourcesService,
+    GatherCraftsService
   ]
 })
 export class AdminModule { }

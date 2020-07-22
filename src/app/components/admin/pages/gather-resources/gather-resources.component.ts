@@ -3,7 +3,7 @@ import { AdminBiz } from 'src/app/components/admin/biz/admin.biz';
 import { ClrLoadingState } from '@clr/angular';
 import { GatherResource } from 'src/shared/models/gather-resources.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { GatheringResourceTypeEnums, GatheringResourceCategoryEnums, GatheringResourceSizeEnums } from 'src/shared/enums/gather-resources.enum';
+import { GatheringResourceTypeEnums, GatheringResourceCategoryEnums, GatheringResourceSizeEnums } from 'src/shared/enums/pso2-lite-generic.enum';
 import Locations from '../../../../../assets/locations.json';
 import Regions from '../../../../../assets/regions.json'
 import { SafeSubscription } from 'src/shared/models/safe-subscription.model';
@@ -40,7 +40,7 @@ export class GatherResourcesComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    this.adminBiz.getAllResources();
+    this.adminBiz.getAll();
     this.initSubscription();
     this.initForm();
     this.initEditForm();

@@ -1,4 +1,4 @@
-import { GatheringResourceTypeEnums, GatheringResourceSizeEnums, GatheringResourceCategoryEnums } from 'src/shared/enums/gather-resources.enum';
+import { GatheringResourceTypeEnums, GatheringResourceSizeEnums, GatheringResourceCategoryEnums } from 'src/shared/enums/pso2-lite-generic.enum';
 
 export class GatherResource                                                                                                                                                                                                                                                                                                        
 {
