@@ -49,6 +49,7 @@ export class Champion {
   stats: ChampionStats;
   spells: ChampionSpell[];
   id: string;
+  code: string;
   title: string;
   constructor() {
     this.stats = new ChampionStats();

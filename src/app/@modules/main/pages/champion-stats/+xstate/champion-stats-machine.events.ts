@@ -11,7 +11,7 @@ export class FetchChampionList {
 
 export class Init {
   readonly type = ChampionStatsMachineEventsEnum.Init;
-  constructor(public champions: Champion[], items: Item[]) {}
+  constructor(public champions: Champion[], public items: Item[]) {}
 }
 
 export class FetchChampionListSuccess {
@@ -74,9 +74,19 @@ export class ChangeChampionLevel {
   constructor(public level: number, public championId: string) {}
 }
 
-export type ChampionStatsEvent = FetchChampionList | FetchItemList | AddChampion | RemoveChampion | RemoveItemFromChampion | AddItemToChampion
-| AddModifierToChampion | RemoveModifierFromChampion | ChangeChampionLevel | FetchChampionListSuccess | FetchItemListSuccess
-| FetchChampionStatSuccess | Init
+export class Finish {
+  readonly type = ChampionStatsMachineEventsEnum.Finish;
+  constructor() {}
+}
+
+export class Fail {
+  readonly type = ChampionStatsMachineEventsEnum.Fail;
+  constructor(public error: any) {}
+}
+
+export type ChampionStatsEvent = FetchChampionList | FetchItemList | AddChampion | RemoveChampion | RemoveItemFromChampion
+| AddItemToChampion | AddModifierToChampion | RemoveModifierFromChampion | ChangeChampionLevel | FetchChampionListSuccess
+| FetchItemListSuccess | FetchChampionStatSuccess | Init | Finish | Fail;
 
 export interface Errors {
   [key: string]: string;

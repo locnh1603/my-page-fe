@@ -14,6 +14,6 @@ export interface ChampionStatsSchema {
 
 export interface ChampionStatContext {
   champions: ChampionStatsDisplay[];
-  items: Item[]
+  items: Item[];
   errors: string[];
 }

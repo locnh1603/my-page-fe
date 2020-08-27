@@ -6,7 +6,7 @@ export const context: ChampionStatContext = {
   champions: [],
   items: [],
   errors: []
-}
+};
 
 export const ChampionStatMachineConfig: MachineConfig<
   ChampionStatContext,
@@ -23,10 +23,15 @@ export const ChampionStatMachineConfig: MachineConfig<
       }
     },
     loading: {
-      on: {}
+      on: {
+        SUCCESS: 'idle',
+        FAIL : 'error'
+      }
     },
     idle: {
-      on: {}
+      on: {
+        FINISH: 'finished'
+      }
     },
     finished: {
       on: {}
@@ -35,4 +40,4 @@ export const ChampionStatMachineConfig: MachineConfig<
       on: {}
     },
   }
-}
+};
