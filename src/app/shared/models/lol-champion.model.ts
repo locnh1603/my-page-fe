@@ -44,8 +44,10 @@ export class ChampionStats {
   }
 }
 
+export class ChampionSpell {}
 export class Champion {
-  stats: ChampionStats
+  stats: ChampionStats;
+  spells: ChampionSpell[];
   id: string;
   title: string;
   constructor() {
