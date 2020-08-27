@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  db_url: 'https://intense-stream-09756.herokuapp.com'
+  ddurl: 'http://ddragon.leagueoflegends.com/cdn/10.16.1/data/en_US/'
 };
 
 /*
