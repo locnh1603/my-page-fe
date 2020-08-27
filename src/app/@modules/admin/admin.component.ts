@@ -15,8 +15,4 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClick(moduleName) {
-    this.router.navigateByUrl(`/admin/${moduleName}`);
-  }
-
 }

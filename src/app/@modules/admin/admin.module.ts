@@ -8,6 +8,10 @@ import { NgxsModule } from '@ngxs/store';
 import { AdminState } from '@modules/admin/state/admin.state';
 import { GatherResourcesService } from '@modules/admin/services/gather-resources.service';
 import { GatherCraftsService } from '@modules/admin/services/gather-crafts.service';
+import { GatherCuisineService } from '@modules/admin/services/gather-cuisines.service';
+import { ClarityModule } from '@clr/angular';
+import { AdminMainComponent } from './pages/admin-main/admin-main.component';
+import { AdminMainModule } from '@modules/admin/pages/admin-main/admin-main.module';
 
 @NgModule({
   declarations: [
@@ -15,14 +19,17 @@ import { GatherCraftsService } from '@modules/admin/services/gather-crafts.servi
   ],
   imports: [
     AdminRoutingModule,
+    AdminMainModule,
     GatherResourcesModule,
     GatherCuisinesModule,
     GatherCraftsModule,
-    NgxsModule.forFeature([AdminState])
+    NgxsModule.forFeature([AdminState]),
+    ClarityModule
   ],
   providers: [
     GatherResourcesService,
-    GatherCraftsService
+    GatherCraftsService,
+    GatherCuisineService
   ]
 })
 export class AdminModule { }

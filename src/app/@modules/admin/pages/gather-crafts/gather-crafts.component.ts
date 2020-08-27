@@ -1,7 +1,13 @@
 import { Component, OnInit, OnDestroy, Output } from '@angular/core';
 import { ClrLoadingState } from '@clr/angular';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { plainToClass } from 'class-transformer'
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 import { SafeSubscription } from 'shared/models/safe-subscription.model';
 import { GatherCraft, SimpleRecipe, CraftRecipe } from 'shared/models/gather-craft.model';
 import { GatherResource } from 'shared/models/gather-resources.model';
@@ -91,7 +97,6 @@ export class GatherCraftsComponent implements OnInit, OnDestroy {
       type: ['left ring', Validators.required],
       class: ['Hunter', Validators.required],
       recipe: this.fb.array([]),
-      recipeDisplay: []
     })
   }
 

@@ -1,1 +1,29 @@
-<p>Admin</p>
+<div class="main-container container m-0 p-0">
+  <header class="header-7">
+    <div class="branding">
+      <a routerLink="/admin"
+         class="nav-link">
+        <span>My Page</span>
+      </a>
+    </div>
+    <div class="header-nav">
+      <clr-dropdown>
+        <button class="nav-icon"
+                clrDropdownTrigger
+                aria-label="toggle settings menu">
+          <span class="header-nav-text">PSO2</span>
+        </button>
+        <clr-dropdown-menu *clrIfOpen
+                           clrPosition="bottom-right">
+          <a  routerLink="/admin/crafts"
+             clrDropdownItem>Crafts</a>
+          <a  routerLink="/admin/resources"
+             clrDropdownItem>Resources</a>
+          <a  routerLink="/admin/cuisines"
+             clrDropdownItem>Cuisines</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+    </div>
+  </header>
+  <router-outlet></router-outlet>
+</div>

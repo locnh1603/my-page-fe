@@ -2,6 +2,7 @@
 import { GatherResource } from 'shared/models/gather-resources.model';
 import { GatherCraft } from 'shared/models/gather-craft.model';
 import { Action } from 'shared/models/action.model';
+import { GatherCuisine } from 'shared/models/gather-cuisines.model';
 
 
 export class StoreResourcesAction implements Action{
@@ -42,4 +43,24 @@ export class EditCraftAction implements Action {
 export class DeleteCraftAction implements Action {
   static readonly type = '[admin] Delete craft';
   constructor(public craft: GatherCraft) { }
+}
+
+export class StoreCuisinesAction implements Action{
+  static readonly type = '[admin] Store cuisines';
+  constructor(public cuisines: GatherCuisine[]) { }
+}
+
+export class CreateCuisineAction implements Action {
+  static readonly type = '[admin] Create cuisine';
+  constructor(public cuisine: GatherCuisine) { }
+}
+
+export class EditCuisineAction implements Action {
+  static readonly type = '[admin] Edit cuisine';
+  constructor(public cuisine: GatherCuisine) { }
+}
+
+export class DeleteCuisineAction implements Action {
+  static readonly type = '[admin] Delete cuisine';
+  constructor(public cuisine: GatherCuisine) { }
 }

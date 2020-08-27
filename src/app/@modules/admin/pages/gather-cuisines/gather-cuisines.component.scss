@@ -1,0 +1,33 @@
+.modal-body{
+  overflow: hidden;
+}
+
+.grid-header-button {
+  width: 120px;
+  margin-right: 7%;
+}
+
+.ng-select.custom {
+  border:0px;
+  min-height: 0px;
+  border-radius: 0;
+  display: absolute;
+}
+.ng-select.custom .ng-select-container  {            
+  min-height: 0px;
+  border-radius: 0;
+  display: absolute;
+}
+
+.modal-body {
+  overflow-y: auto;
+  margin: 3%;
+}
+
+input {
+  width: 100%;
+}
+
+.recipe-box {
+  padding: 5%;
+}

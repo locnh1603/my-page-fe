@@ -7,13 +7,16 @@ import { GatherCraft } from 'shared/models/gather-craft.model';
 import { GatherResourcesService } from '@modules/admin/services/gather-resources.service';
 import { GatherCraftsService } from '@modules/admin/services/gather-crafts.service';
 import { Dispatcher } from 'shared/services/dispatcher';
-import { StoreResourcesAction, DeleteResourceAction, CreateResourceAction, EditResourceAction, StoreCraftsAction, DeleteCraftAction, CreateCraftAction, EditCraftAction } from '@modules/admin/state/admin.action';
+import { StoreResourcesAction, DeleteResourceAction, CreateResourceAction, EditResourceAction, StoreCraftsAction, DeleteCraftAction, CreateCraftAction, EditCraftAction, StoreCuisinesAction, DeleteCuisineAction, CreateCuisineAction, EditCuisineAction } from '@modules/admin/state/admin.action';
+import { GatherCuisineService } from '@modules/admin/services/gather-cuisines.service';
+import { GatherCuisine } from 'shared/models/gather-cuisines.model';
 
 @Injectable()
 export class AdminBiz {
 
   @Select(AdminSelector.getResources$) readonly resources$: Observable<GatherResource[]>;
   @Select(AdminSelector.getCrafts$) readonly crafts$: Observable<GatherCraft[]>;
+  @Select(AdminSelector.getCuisines$) readonly cuisines$: Observable<GatherCuisine[]>;
 
   readonly deleteSuccess: Subject<any> = new Subject<any>();
   readonly createSuccess: Subject<any> = new Subject<any>();
@@ -22,6 +25,7 @@ export class AdminBiz {
   constructor(
     private resourceService: GatherResourcesService,
     private craftService: GatherCraftsService,
+    private cuisineService: GatherCuisineService,
     private dispatcher: Dispatcher
   ) {
 
@@ -30,6 +34,7 @@ export class AdminBiz {
   getAll() {
     this.getAllCrafts();
     this.getAllResources();
+    this.getAllCuisines();
   }
 
   getAllResources() {
@@ -82,6 +87,33 @@ export class AdminBiz {
   updateCraft(entity: GatherCraft) {
     this.craftService.edit(entity.id, entity).subscribe((res: GatherCraft) => {
       this.dispatcher.fire(new EditCraftAction(res));
+      this.editSuccess.next('edit');
+    });
+  }
+
+  getAllCuisines() {
+    this.cuisineService.getAll().subscribe((res : GatherCuisine[]) => {
+      this.dispatcher.fire(new StoreCuisinesAction(res));
+    });
+  }
+
+  deleteCuisine(id: string) {
+    this.cuisineService.delete(id).subscribe((res: GatherCuisine) => {
+      this.dispatcher.fire(new DeleteCuisineAction(res));
+      this.deleteSuccess.next('delete');
+    });
+  }
+
+  createCuisine(entity: GatherCuisine) {
+    this.cuisineService.create(entity).subscribe((res: GatherCuisine) => {
+      this.dispatcher.fire(new CreateCuisineAction(res));
+      this.createSuccess.next('create');
+    });
+  }
+
+  updateCuisine(entity: GatherCuisine) {
+    this.cuisineService.edit(entity.id, entity).subscribe((res: GatherCuisine) => {
+      this.dispatcher.fire(new EditCuisineAction(res));
       this.editSuccess.next('edit');
     });
   }

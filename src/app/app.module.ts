@@ -17,6 +17,7 @@ import { LandingModule } from '@modules/landing/landing.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     AdminModule,
