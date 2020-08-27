@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnDestroy, OnInit {
   constructor(
-    private router: Router     
+    private router: Router
   ) {}
-  
+
   ngOnInit(): void {
   }
 

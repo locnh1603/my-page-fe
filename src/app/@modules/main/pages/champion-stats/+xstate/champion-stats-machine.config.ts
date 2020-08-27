@@ -30,14 +30,25 @@ export const ChampionStatMachineConfig: MachineConfig<
     },
     idle: {
       on: {
-        FINISH: 'finished'
+        FINISH: 'finished',
+        ADD_CHAMPION: 'idle',
+        REMOVE_CHAMPION: 'idle',
+        ADD_MODIFIER_TO_CHAMPION: 'idle',
+        REMOVE_MODIFIER_FROM_CHAMPION: 'idle',
+        ADD_ITEM_TO_CHAMPION: 'idle',
+        REMOVE_ITEM_FROM_CHAMPION: 'idle',
+        CHANGE_CHAMPION_LEVEL: 'idle',
+        INIT: 'loading'
       }
     },
     finished: {
-      on: {}
+      type: 'final'
     },
     error: {
-      on: {}
+      type: 'final',
+      on : {
+        '': 'loading'
+      }
     },
   }
 };
