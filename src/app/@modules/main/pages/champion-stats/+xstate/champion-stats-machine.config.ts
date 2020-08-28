@@ -4,7 +4,7 @@ import { ChampionStatsEvent } from '@modules/main/pages/champion-stats/+xstate/c
 
 export const context: ChampionStatContext = {
   champions: [],
-  selectedChampions: [],
+  selectedChampion: null,
   items: [],
   errors: []
 };

@@ -5,8 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from '@core/app.component';
 import { AppRoutingModule } from '@core/app-routing.module';
 import { LandingModule } from '@modules/landing/landing.module';
-import { NgxsModule } from '@ngxs/store';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin'
 import { SharedModule } from 'shared/shared.module';
 
 @NgModule({
@@ -20,9 +18,7 @@ import { SharedModule } from 'shared/shared.module';
     AppRoutingModule,
     LandingModule,
     BrowserAnimationsModule,
-    SharedModule,
-    NgxsModule.forRoot([]),
-    NgxsReduxDevtoolsPluginModule.forRoot()
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

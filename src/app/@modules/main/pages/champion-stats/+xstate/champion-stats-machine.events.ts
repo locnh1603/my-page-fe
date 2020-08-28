@@ -40,12 +40,12 @@ export class RemoveChampion implements EventObject {
 
 export class AddItemToChampion implements EventObject {
   readonly type = ChampionStatsMachineEventsEnum.AddItemToChampion;
-  constructor(public item: Item, public championId: string) { }
+  constructor(public item: Item) { }
 }
 
 export class RemoveItemFromChampion implements EventObject {
   readonly type = ChampionStatsMachineEventsEnum.RemoveItemFromChampion;
-  constructor(public itemId: string, public championId: string) { }
+  constructor(public item: Item) { }
 }
 
 export class AddModifierToChampion implements EventObject {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { from, forkJoin, Observable } from 'rxjs';
+import { from, forkJoin } from 'rxjs';
 import { MachineOptions, AnyEventObject, Machine, interpret, assign } from 'xstate';
-import { ChampionStatsEvent, FetchInitSuccess, AddChampion, AddItemToChampion } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
+import { ChampionStatsEvent, FetchInitSuccess, AddChampion, AddItemToChampion, RemoveItemFromChampion } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
 import { ChampionStatContext, ChampionStatsSchema } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.schema';
 import { ChampionStatMachineConfig } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.config';
 import { map } from 'rxjs/operators';
@@ -9,12 +9,8 @@ import { ChampionService } from 'shared/services/lol-champion.service';
 import { ItemService } from 'shared/services/lol-item.service';
 import { RuneService } from 'shared/services/lol-runes.service';
 import { SummonerSpellService } from 'shared/services/lol-summonerspell.service';
-import { Select } from '@ngxs/store';
 import { ChampionCompact } from 'shared/models/lol-champion.model';
 import { Item } from 'shared/models/lol-item.model';
-import { Rune } from 'shared/models/lol-rune.model';
-import { SummonerSpell } from 'shared/models/lol-summoner-spells.model';
-import { Dispatcher } from '@core/services/dispatcher';
 import { ChampionStatsDisplay } from '@modules/main/pages/champion-stats/models/champion-stats-display.model';
 
 @Injectable()
@@ -40,21 +36,20 @@ export class ChampionStatsBiz {
           }
         }),
         addChampion: assign<any, ChampionStatsEvent>((_, event: AddChampion) => {
-          const selectedChampions = [..._.selectedChampions];
-          selectedChampions.push(event.champion);
+          let selectedChampion =_.selectedChampion;
+          selectedChampion = event.champion;
           return {
-            selectedChampions
+            selectedChampion
           }
         }),
         addItemToChampion: assign<any, ChampionStatsEvent>((_, event: AddItemToChampion) => {
-          const selectedChampions: ChampionStatsDisplay[] = [..._.selectedChampions];
-          const targetChampion = selectedChampions.find(c => c.id === event.championId);
-          if(!targetChampion.items) {
-            targetChampion.items = [];
+          const selectedChampion: ChampionStatsDisplay = _.selectedChampion;
+          if(!selectedChampion.items) {
+            selectedChampion.items = [];
           }
-          targetChampion.items.push(event.item);
+          selectedChampion.items.push(event.item);
           return {
-            selectedChampions
+            selectedChampion
           }
         })
       },
@@ -108,7 +103,11 @@ export class ChampionStatsBiz {
   }
 
   addItemToChampion(item: Item, championId: string) {
-    this.transition(new AddItemToChampion(item, championId));
+    this.transition(new AddItemToChampion(item));
+  }
+
+  removeItemFromChampion(item: Item, championId: string) {
+    this.transition(new RemoveItemFromChampion(item));
   }
 
   get state$() {

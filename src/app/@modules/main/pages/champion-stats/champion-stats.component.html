@@ -1,27 +1,28 @@
 <div class="d-flex flex-row">
   <div class="d-flex flex-column">
-    <div *ngFor="let champion of state.context.champions" (click)="onSelectChampion(champion)">
+    <div *ngFor="let champion of state.context.champions"
+         (click)="onSelectChampion(champion)">
       {{!champion.id ? '' : champion.id }}
     </div>
   </div>
-  <div class="d-flex flex-column">
-    <div *ngFor="let item of state.context.items" (click)="onSelectItem(item)">
+  <div class="d-flex flex-column"
+       *ngIf="!!state.context.selectedChampion">
+    <h3>Items</h3>
+    <div *ngFor="let item of state.context.items"
+         (click)="onSelectItem(item)">
       {{!item.name ? '' : item.name}}
     </div>
   </div>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column"
+       *ngIf="!!state.context.selectedChampion">
+    <h3>Runes</h3>
     <div *ngFor="let rune of state.context.runes">
       {{!rune.name ? '' : rune.name}}
     </div>
   </div>
-  <div class="d-flex flex-column">
-    <div *ngFor="let summoner of state.context.summoners">
-      {{!summoner.name ? '' : summoner.name}}
-    </div>
-  </div>
-  <div *ngIf="state.context.selectedChampions.length > 0">
-    <h2>{{state.context.selectedChampions[0].name}}</h2>
-    <div *ngFor="let item of state.context.selectedChampions[0].items">
+  <div *ngIf="!!state.context.selectedChampion">
+    <h2>{{state.context.selectedChampion.name}}</h2>
+    <div *ngFor="let item of state.context.selectedChampion.items">
       {{!item.name ? '' : item.name}}
     </div>
   </div>

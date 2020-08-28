@@ -49,10 +49,17 @@ export class ChampionStatsComponent implements OnInit, OnDestroy {
   }
 
   onSelectChampion(champion: ChampionCompact) {
+    if (!champion) { return; }
     this.championStatsBiz.addChampion(champion);
   }
 
   onSelectItem(item: Item) {
-    this.championStatsBiz.addItemToChampion(item, this.state.context.selectedChampions[0].id);
+    if (!item) { return; }
+    this.championStatsBiz.addItemToChampion(item, this.state.context.selectedChampion.id);
+  }
+
+  onRemoveItem(item: Item) {
+    if (!item) { return; }
+    this.championStatsBiz.removeItemFromChampion(item, this.state.context.selectedChampion.id);
   }
 }
