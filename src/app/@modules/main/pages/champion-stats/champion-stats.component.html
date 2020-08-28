@@ -1,1 +1,31 @@
-<p>champion-stats works!</p>
+<div class="d-flex flex-row">
+  <div class="d-flex flex-column">
+    <div *ngFor="let champion of state.context.champions" (click)="onSelectChampion(champion)">
+      {{!champion.id ? '' : champion.id }}
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div *ngFor="let item of state.context.items" (click)="onSelectItem(item)">
+      {{!item.name ? '' : item.name}}
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div *ngFor="let rune of state.context.runes">
+      {{!rune.name ? '' : rune.name}}
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div *ngFor="let summoner of state.context.summoners">
+      {{!summoner.name ? '' : summoner.name}}
+    </div>
+  </div>
+  <div *ngIf="state.context.selectedChampions.length > 0">
+    <h2>{{state.context.selectedChampions[0].name}}</h2>
+    <div *ngFor="let item of state.context.selectedChampions[0].items">
+      {{!item.name ? '' : item.name}}
+    </div>
+  </div>
+  <div class="ml-auto">
+    Current State {{state.value}}
+  </div>
+</div>

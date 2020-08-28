@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +7,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnDestroy, OnInit {
   constructor(
-    private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
-  }
-
-  onClick(moduleName) {
-    this.router.navigateByUrl(`${moduleName}`);
   }
 }

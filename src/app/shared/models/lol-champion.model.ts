@@ -1,3 +1,5 @@
+import { Type } from 'class-transformer'
+
 export class ChampionStats {
   hp: number;
   hpperlevel: number;
@@ -44,14 +46,45 @@ export class ChampionStats {
   }
 }
 
-export class ChampionSpell {}
-export class Champion {
-  stats: ChampionStats;
-  spells: ChampionSpell[];
-  id: string;
-  code: string;
-  title: string;
+export class ChampionInfo {
+  attack: number;
+  defense: number;
+  magic: number;
+  difficulty: number;
+
   constructor() {
-    this.stats = new ChampionStats();
+    this.attack = 0;
+    this.defense = 0;
+    this.difficulty = 0;
+    this.magic = 0;
   }
 }
+
+export class ChampionSpell { }
+export class ChampionCompact {
+  @Type(() => ChampionStats)
+  stats: ChampionStats;
+  id: string;
+  key: string;
+  title: string;
+  @Type(() => ChampionInfo)
+  info: ChampionInfo;
+  tags: string[];
+  constructor() {
+    this.stats = new ChampionStats();
+    this.info = new ChampionInfo();
+    this.id = '';
+    this.key = '';
+    this.title = '';
+    this.tags = [];
+  }
+}
+export class Champion extends ChampionCompact {
+  spells: ChampionSpell[];
+  constructor() {
+    super();
+    this.spells = [];
+  }
+}
+
+

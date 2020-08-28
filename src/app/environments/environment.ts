@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  ddurl: 'http://ddragon.leagueoflegends.com/cdn/10.16.1/data/en_US/'
+  ddurl: 'http://ddragon.leagueoflegends.com/cdn/10.16.1/data/en_US',
+  cdurl: 'http://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1'
 };
 
 /*

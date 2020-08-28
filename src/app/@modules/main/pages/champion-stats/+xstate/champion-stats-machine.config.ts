@@ -4,6 +4,7 @@ import { ChampionStatsEvent } from '@modules/main/pages/champion-stats/+xstate/c
 
 export const context: ChampionStatContext = {
   champions: [],
+  selectedChampions: [],
   items: [],
   errors: []
 };
@@ -18,27 +19,42 @@ export const ChampionStatMachineConfig: MachineConfig<
   initial: 'boot',
   states: {
     boot: {
-      on: {
-        INIT: 'loading'
-      }
+      always: 'loading'
     },
     loading: {
+      invoke: {
+        id: 'fetch',
+        src: 'fetch'
+      },
       on: {
-        SUCCESS: 'idle',
-        FAIL : 'error'
+        SUCCESS: {
+          target: 'idle',
+          actions: ['logMessage', 'init']
+        },
+        FAIL: 'error'
       }
     },
     idle: {
       on: {
         FINISH: 'finished',
-        ADD_CHAMPION: 'idle',
+        ADD_CHAMPION: {
+          target: 'championDetail',
+          actions: ['logMessage', 'addChampion']
+        },
         REMOVE_CHAMPION: 'idle',
+        INIT: 'loading'
+      }
+    },
+    championDetail: {
+      on: {
         ADD_MODIFIER_TO_CHAMPION: 'idle',
         REMOVE_MODIFIER_FROM_CHAMPION: 'idle',
-        ADD_ITEM_TO_CHAMPION: 'idle',
+        ADD_ITEM_TO_CHAMPION: {
+          target: 'championDetail',
+          actions: ['logMessage','addItemToChampion']
+        },
         REMOVE_ITEM_FROM_CHAMPION: 'idle',
         CHANGE_CHAMPION_LEVEL: 'idle',
-        INIT: 'loading'
       }
     },
     finished: {
@@ -46,9 +62,7 @@ export const ChampionStatMachineConfig: MachineConfig<
     },
     error: {
       type: 'final',
-      on : {
-        '': 'loading'
-      }
+      always: 'loading'
     },
   }
 };
