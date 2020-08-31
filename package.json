@@ -22,8 +22,6 @@
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
-    "@ngxs/devtools-plugin": "^3.6.2",
-    "@ngxs/store": "^3.6.2",
     "@types/lodash": "^4.14.160",
     "@webcomponents/webcomponentsjs": "^2.4.4",
     "ag-grid-angular": "^23.2.1",

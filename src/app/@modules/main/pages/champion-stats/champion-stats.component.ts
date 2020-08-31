@@ -3,11 +3,12 @@ import { ChampionStatsBiz } from '@modules/main/pages/champion-stats/+xstate/cha
 import { SafeSubscription } from 'shared/models/safe-subscription.model';
 import { ChampionCompact } from 'shared/models/lol-champion.model';
 import { Item } from 'shared/models/lol-item.model';
-import { Rune } from 'shared/models/lol-rune.model';
+import { Rune, RunesGrouped } from 'shared/models/lol-rune.model';
 import { SummonerSpell } from 'shared/models/lol-summoner-spells.model';
 import { combineLatest, forkJoin } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { tap } from 'rxjs/operators';
+import { RuneGroupsEnum } from 'shared/enums/runes.enum';
 
 @Component({
   selector: 'ChampionStats-champion-stats',
@@ -55,11 +56,58 @@ export class ChampionStatsComponent implements OnInit, OnDestroy {
 
   onSelectItem(item: Item) {
     if (!item) { return; }
-    this.championStatsBiz.addItemToChampion(item, this.state.context.selectedChampion.id);
+    this.championStatsBiz.addItemToChampion(item);
   }
 
   onRemoveItem(item: Item) {
     if (!item) { return; }
-    this.championStatsBiz.removeItemFromChampion(item, this.state.context.selectedChampion.id);
+    this.championStatsBiz.removeItemFromChampion(item);
+  }
+
+  getChampionIconUrl(champion: ChampionCompact): string {
+    const url = `http://ddragon.leagueoflegends.com/cdn/10.16.1/img/champion/${champion.id}.png`;
+    return url;
+  }
+  getItemIconUrl(item: Item): string {
+    const url = `http://ddragon.leagueoflegends.com/cdn/10.16.1/img/item/${item.id}.png`;
+    return url;
+  }
+  getRunesIconUrl(rune: Rune): string {
+    const url = `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1${rune.iconPath}`;
+    return url;
+  }
+  getRunesGroupIconUrl(runeGroup: RunesGrouped): string {
+    let endpoint = '';
+    if (runeGroup.name === 'Unknown') { return; }
+    switch (runeGroup.name) {
+      case RuneGroupsEnum.Domination:
+        endpoint = '7200_domination';
+        break;
+      case RuneGroupsEnum.Resolve:
+        endpoint = '7204_resolve';
+        break;
+      case RuneGroupsEnum.Inspirations:
+        endpoint = '7203_whimsy';
+        break;
+      case RuneGroupsEnum.Sorcery:
+        endpoint = '7202_sorcery';
+        break;
+      case RuneGroupsEnum.Precision:
+        endpoint = '7201_precision';
+        break;
+    }
+    const url = `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/perk-images/styles/${endpoint}.png`
+    return url;
+  }
+
+  getSelectedChampionSplashArt(): string {
+    if (!this.state.context.selectedChampion) {
+      return;
+    }
+    const url = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${this.state.context.selectedChampion.name}_0.jpg`;
+    return url;
+  }
+  reselectChampion() {
+    this.championStatsBiz.reselectChampion();
   }
 }

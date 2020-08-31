@@ -1,32 +1,49 @@
-<div class="d-flex flex-row">
-  <div class="d-flex flex-column">
+<div class="champion-stats"
+     [style.background]="'url(' + getSelectedChampionSplashArt() + ')'">
+  <div class="row champion-select p-0"
+       [ngClass]="{'d-none': state.context.value === 'champion-select'}">
     <div *ngFor="let champion of state.context.champions"
-         (click)="onSelectChampion(champion)">
-      {{!champion.id ? '' : champion.id }}
+         (click)="onSelectChampion(champion)"
+         class="col-4 p-0">
+      <img [src]="getChampionIconUrl(champion)"
+           [alt]="champion.id"
+           class="champion-select-icon">
     </div>
   </div>
-  <div class="d-flex flex-column"
-       *ngIf="!!state.context.selectedChampion">
-    <h3>Items</h3>
+  <div class="row item-select p-0"
+       [ngClass]="{'d-none': state.context.value === 'item-select'}">
     <div *ngFor="let item of state.context.items"
-         (click)="onSelectItem(item)">
-      {{!item.name ? '' : item.name}}
+         (click)="onSelectItem(item)"
+         class="col-4 p-0">
+      <img [src]="getItemIconUrl(item)"
+           [alt]="item.name"
+           class="item-select-icon">
     </div>
   </div>
-  <div class="d-flex flex-column"
+  <div class="champion-details"
        *ngIf="!!state.context.selectedChampion">
-    <h3>Runes</h3>
-    <div *ngFor="let rune of state.context.runes">
-      {{!rune.name ? '' : rune.name}}
+    <button type="button"
+            (click)="reselectChampion()">Reselect Champion</button>
+
+    <div class="d-flex flex-column rune-select">
+      <div *ngFor="let runeGroup of state.context.runes">
+        <img [src]="getRunesGroupIconUrl(runeGroup)"
+             [alt]="runeGroup.name"
+             [ngClass]="{'d-none': runeGroup.name === 'Unknown'}">
+        <div *ngFor="let rune of runeGroup.runes">
+          <img [src]="getRunesIconUrl(rune)"
+               [alt]="rune.name"
+               [ngClass]="{'major-rune-icon': rune.type === 'major', 'minor-rune-icon': rune.type === 'minor', 'd-none': rune.group === 'Unknown'}">
+        </div>
+      </div>
+    </div>
+    <div class="champion-items">
+      <div *ngFor="let item of state.context.selectedChampion.items">
+        {{!item.name ? '' : item.name}}
+      </div>
     </div>
   </div>
-  <div *ngIf="!!state.context.selectedChampion">
-    <h2>{{state.context.selectedChampion.name}}</h2>
-    <div *ngFor="let item of state.context.selectedChampion.items">
-      {{!item.name ? '' : item.name}}
-    </div>
-  </div>
-  <div class="ml-auto">
+  <div class="ml-auto state-panel">
     Current State {{state.value}}
   </div>
 </div>

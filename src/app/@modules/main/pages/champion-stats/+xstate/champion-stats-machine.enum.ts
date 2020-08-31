@@ -12,5 +12,7 @@ export enum ChampionStatsMachineEventsEnum {
   ChangeChampionLevel = 'CHANGE_CHAMPION_LEVEL',
   AddModifierToChampion = 'ADD_MODIFIER_TO_CHAMPION',
   RemoveModifierFromChampion = 'REMOVE_MODIFIER_FROM_CHAMPION',
+  ReselectChampion = 'RESELECT_CHAMPION',
   Finish = 'FINISH',
+  SelectItem = 'SELECT_ITEM'
 }

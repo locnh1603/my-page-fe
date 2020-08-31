@@ -6,7 +6,8 @@ export const context: ChampionStatContext = {
   champions: [],
   selectedChampion: null,
   items: [],
-  errors: []
+  errors: [],
+  runes: []
 };
 
 export const ChampionStatMachineConfig: MachineConfig<
@@ -28,33 +29,44 @@ export const ChampionStatMachineConfig: MachineConfig<
       },
       on: {
         SUCCESS: {
-          target: 'idle',
-          actions: ['logMessage', 'init']
+          target: 'championSelect',
+          actions: ['init']
         },
         FAIL: 'error'
       }
     },
-    idle: {
+    championSelect: {
       on: {
         FINISH: 'finished',
         ADD_CHAMPION: {
-          target: 'championDetail',
-          actions: ['logMessage', 'addChampion']
+          target: 'itemSelect',
+          actions: ['addChampion']
         },
-        REMOVE_CHAMPION: 'idle',
         INIT: 'loading'
       }
     },
-    championDetail: {
+    itemSelect: {
       on: {
-        ADD_MODIFIER_TO_CHAMPION: 'idle',
-        REMOVE_MODIFIER_FROM_CHAMPION: 'idle',
+        RESELECT_CHAMPION: {
+          target: 'championSelect',
+          actions: ['reselectChampion']
+        },
         ADD_ITEM_TO_CHAMPION: {
-          target: 'championDetail',
+          target: 'itemSelect',
           actions: ['logMessage','addItemToChampion']
         },
-        REMOVE_ITEM_FROM_CHAMPION: 'idle',
-        CHANGE_CHAMPION_LEVEL: 'idle',
+        REMOVE_ITEM_FROM_CHAMPION: 'championSelect',
+      }
+    },
+    runeSelect: {
+      on: {
+        RESELECT_CHAMPION: {
+          target: 'championSelect',
+          actions: ['reselectChampion']
+        },
+        SELECT_ITEM: {
+          
+        }
       }
     },
     finished: {

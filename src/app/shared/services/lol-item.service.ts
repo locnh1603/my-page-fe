@@ -16,7 +16,11 @@ export class ItemService {
   fetchItemList(): Observable<Item[]> {
     const url = `${this.url}/${ddragonEndPointEnum.Item}.json`;
     return this.http.get<any>(url).pipe(map((res: any) => {
-      return Object.keys(res.data).map(k => res.data[k]);
+      return Object.keys(res.data).map(k => {
+        return {
+          ...res.data[k], id: k
+        }
+      });
     }));
   }
 }

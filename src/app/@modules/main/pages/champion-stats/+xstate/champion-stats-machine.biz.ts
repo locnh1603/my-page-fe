@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { from, forkJoin } from 'rxjs';
-import { MachineOptions, AnyEventObject, Machine, interpret, assign } from 'xstate';
-import { ChampionStatsEvent, FetchInitSuccess, AddChampion, AddItemToChampion, RemoveItemFromChampion } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
+import { MachineOptions, Machine, interpret, assign } from 'xstate';
+import { ChampionStatsEvent, FetchInitSuccess, ReselectChampion, AddChampion, AddItemToChampion, RemoveItemFromChampion } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
 import { ChampionStatContext, ChampionStatsSchema } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.schema';
 import { ChampionStatMachineConfig } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.config';
 import { map } from 'rxjs/operators';
 import { ChampionService } from 'shared/services/lol-champion.service';
 import { ItemService } from 'shared/services/lol-item.service';
 import { RuneService } from 'shared/services/lol-runes.service';
-import { SummonerSpellService } from 'shared/services/lol-summonerspell.service';
 import { ChampionCompact } from 'shared/models/lol-champion.model';
 import { Item } from 'shared/models/lol-item.model';
 import { ChampionStatsDisplay } from '@modules/main/pages/champion-stats/models/champion-stats-display.model';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class ChampionStatsBiz {
@@ -24,32 +24,31 @@ export class ChampionStatsBiz {
       ChampionStatsEvent
     >> = {
       actions: {
-        logMessage: (_, event: AnyEventObject) => {
-          console.log('>>>>>>>>>>> eventMsg: ' + event.message);
-        },
         init: assign<any, ChampionStatsEvent>((_, event: FetchInitSuccess) => {
           return {
             champions: [...event.payload.champions],
             items: [...event.payload.items],
-            runes: [...event.payload.runes],
-            summoners: [...event.payload.summoners]
+            runes: [...event.payload.runes]
           }
         }),
         addChampion: assign<any, ChampionStatsEvent>((_, event: AddChampion) => {
-          let selectedChampion =_.selectedChampion;
-          selectedChampion = event.champion;
           return {
-            selectedChampion
+            selectedChampion: cloneDeep(event.champion)
+          }
+        }),
+        reselectChampion: assign<any, ChampionStatsEvent>((_, event: ReselectChampion) => {
+          return {
+            selectedChampion: null
           }
         }),
         addItemToChampion: assign<any, ChampionStatsEvent>((_, event: AddItemToChampion) => {
           const selectedChampion: ChampionStatsDisplay = _.selectedChampion;
-          if(!selectedChampion.items) {
+          if (!selectedChampion.items) {
             selectedChampion.items = [];
           }
           selectedChampion.items.push(event.item);
           return {
-            selectedChampion
+            selectedChampion: cloneDeep(selectedChampion)
           }
         })
       },
@@ -58,15 +57,13 @@ export class ChampionStatsBiz {
           forkJoin([
             this.championService.fetchChampionList().pipe(),
             this.itemService.fetchItemList().pipe(),
-            this.runeService.fetchRuneList().pipe(),
-            this.summonerSpellService.fetchSummonerList().pipe()
+            this.runeService.fetchRuneList().pipe()
           ]).pipe(map(
-            ([champions, items, runes, summoners]) => {
+            ([champions, items, runes]) => {
               return new FetchInitSuccess({
                 champions,
                 items,
-                runes,
-                summoners
+                runes
               })
             }
           ))
@@ -75,8 +72,7 @@ export class ChampionStatsBiz {
   constructor(
     private championService: ChampionService,
     private itemService: ItemService,
-    private runeService: RuneService,
-    private summonerSpellService: SummonerSpellService
+    private runeService: RuneService
   ) {
 
   }
@@ -102,11 +98,15 @@ export class ChampionStatsBiz {
     })
   }
 
-  addItemToChampion(item: Item, championId: string) {
+  reselectChampion() {
+    this.transition(new ReselectChampion());
+  }
+
+  addItemToChampion(item: Item) {
     this.transition(new AddItemToChampion(item));
   }
 
-  removeItemFromChampion(item: Item, championId: string) {
+  removeItemFromChampion(item: Item) {
     this.transition(new RemoveItemFromChampion(item));
   }
 

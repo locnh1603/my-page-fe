@@ -9,6 +9,7 @@ export class ItemGoldDetail {
 }
 
 export class Item {
+  id: string;
   key: string;
   name: string;
   description: string;

@@ -4,8 +4,7 @@ import { Item } from 'shared/models/lol-item.model';
 import { ChampionStatsDisplay } from '@modules/main/pages/champion-stats/models/champion-stats-display.model';
 import { StatModifier } from 'shared/models/lol-modifier.model';
 import { EventObject } from 'xstate';
-import { Rune } from 'shared/models/lol-rune.model';
-import { SummonerSpell } from 'shared/models/lol-summoner-spells.model';
+import { RunesGrouped } from 'shared/models/lol-rune.model';
 
 
 export class Init implements EventObject {
@@ -18,8 +17,7 @@ export class FetchInitSuccess implements EventObject {
   constructor(public payload: {
     items: Item[],
     champions: ChampionCompact[],
-    runes: Rune[],
-    summoners: SummonerSpell[],
+    runes: RunesGrouped[]
   }) { }
 }
 
@@ -33,9 +31,9 @@ export class AddChampion implements EventObject {
   constructor(public champion: ChampionStatsDisplay) { }
 }
 
-export class RemoveChampion implements EventObject {
-  readonly type = ChampionStatsMachineEventsEnum.RemoveChampion;
-  constructor(public championId: string) { }
+export class SelectItem implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.SelectItem;
+  constructor() { }
 }
 
 export class AddItemToChampion implements EventObject {
@@ -68,12 +66,17 @@ export class Finish implements EventObject {
   constructor() { }
 }
 
+export class ReselectChampion implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ReselectChampion;
+  constructor() { }
+}
+
 export class Fail implements EventObject {
   readonly type = ChampionStatsMachineEventsEnum.Fail;
   constructor(public error: any) { }
 }
 
-export type ChampionStatsEvent =  AddChampion | RemoveChampion | RemoveItemFromChampion | FetchInitSuccess
+export type ChampionStatsEvent = AddChampion | ReselectChampion | RemoveItemFromChampion | FetchInitSuccess | SelectItem
   | AddItemToChampion | AddModifierToChampion | RemoveModifierFromChampion | ChangeChampionLevel | FetchChampionStatSuccess | Init | Finish | Fail;
 
 export interface Errors {
