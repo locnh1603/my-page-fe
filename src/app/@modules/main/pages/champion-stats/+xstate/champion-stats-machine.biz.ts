@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, forkJoin } from 'rxjs';
 import { MachineOptions, Machine, interpret, assign } from 'xstate';
-import { ChampionStatsEvent, FetchInitSuccess, ReselectChampion, AddChampion, AddItemToChampion, RemoveItemFromChampion } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
+import { ChampionStatsEvent, FetchInitSuccess, ToChampionSelect, AddChampion, AddItemToChampion, RemoveItemFromChampion, ToItemSelect, ToRuneSelect } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
 import { ChampionStatContext, ChampionStatsSchema } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.schema';
 import { ChampionStatMachineConfig } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.config';
 import { map } from 'rxjs/operators';
@@ -36,11 +36,6 @@ export class ChampionStatsBiz {
             selectedChampion: cloneDeep(event.champion)
           }
         }),
-        reselectChampion: assign<any, ChampionStatsEvent>((_, event: ReselectChampion) => {
-          return {
-            selectedChampion: null
-          }
-        }),
         addItemToChampion: assign<any, ChampionStatsEvent>((_, event: AddItemToChampion) => {
           const selectedChampion: ChampionStatsDisplay = _.selectedChampion;
           if (!selectedChampion.items) {
@@ -67,6 +62,11 @@ export class ChampionStatsBiz {
               })
             }
           ))
+      },
+      guards: {
+        selectedChampion: (context) => {
+          return !!context.selectedChampion;
+        }
       }
     };
   constructor(
@@ -98,8 +98,16 @@ export class ChampionStatsBiz {
     })
   }
 
-  reselectChampion() {
-    this.transition(new ReselectChampion());
+  toChampionSelect() {
+    this.transition(new ToChampionSelect());
+  }
+
+  toItemSelect() {
+    this.transition(new ToItemSelect());
+  }
+
+  toRuneSelect() {
+    this.transition(new ToRuneSelect());
   }
 
   addItemToChampion(item: Item) {

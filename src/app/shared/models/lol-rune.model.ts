@@ -1,4 +1,4 @@
-import { RuneGroupsEnum, RuneTypesEnum, MajorRunesEnum, SorceryRunesEnum, ResolveRunesEnum, PrecisionRunesEnum, InspirationRunesEnum, DominationRunesEnum } from 'shared/enums/runes.enum';
+import { RuneTypesEnum, MajorRunesEnum, SorceryRunesEnum, ResolveRunesEnum, PrecisionRunesEnum, InspirationRunesEnum, DominationRunesEnum, RuneGroupsEnum } from 'shared/enums/runes.enum';
 
 export class Rune {
   id: string;
@@ -55,5 +55,12 @@ export class RunesGrouped {
   constructor(name: RuneGroupsEnum) {
     this.name = name;
     this.runes = [];
+  }
+}
+
+export class RunesGroupedDisplay extends RunesGrouped {
+  selectedRunes: Rune[];
+  constructor(name: RuneGroupsEnum) {
+    super(name);
   }
 }

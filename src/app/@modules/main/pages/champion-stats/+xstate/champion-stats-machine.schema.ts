@@ -10,9 +10,18 @@ export interface ChampionStatsSchema {
     loading: {};
     championSelect: {};
     itemSelect: {};
-    runeSelect: {};
+    runeSelect: {
+      states: {
+        init: {};
+        precision: {};
+        sorcery: {};
+        resolve: {};
+        inspiration: {};
+        domination: {};
+      }
+    };
     finished: {};
-    error: {}
+    error: {};
   };
 }
 

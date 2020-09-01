@@ -31,11 +31,6 @@ export class AddChampion implements EventObject {
   constructor(public champion: ChampionStatsDisplay) { }
 }
 
-export class SelectItem implements EventObject {
-  readonly type = ChampionStatsMachineEventsEnum.SelectItem;
-  constructor() { }
-}
-
 export class AddItemToChampion implements EventObject {
   readonly type = ChampionStatsMachineEventsEnum.AddItemToChampion;
   constructor(public item: Item) { }
@@ -66,8 +61,20 @@ export class Finish implements EventObject {
   constructor() { }
 }
 
-export class ReselectChampion implements EventObject {
-  readonly type = ChampionStatsMachineEventsEnum.ReselectChampion;
+export class ToChampionSelect implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToChampionSelect;
+  constructor() { }
+}
+
+
+export class ToRuneSelect implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToRuneSelect;
+  constructor() { }
+}
+
+
+export class ToItemSelect implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToItemSelect;
   constructor() { }
 }
 
@@ -76,7 +83,7 @@ export class Fail implements EventObject {
   constructor(public error: any) { }
 }
 
-export type ChampionStatsEvent = AddChampion | ReselectChampion | RemoveItemFromChampion | FetchInitSuccess | SelectItem
+export type ChampionStatsEvent = AddChampion | ToChampionSelect | RemoveItemFromChampion | FetchInitSuccess | ToItemSelect | ToRuneSelect
   | AddItemToChampion | AddModifierToChampion | RemoveModifierFromChampion | ChangeChampionLevel | FetchChampionStatSuccess | Init | Finish | Fail;
 
 export interface Errors {

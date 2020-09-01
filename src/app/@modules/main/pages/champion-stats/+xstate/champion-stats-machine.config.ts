@@ -36,36 +36,110 @@ export const ChampionStatMachineConfig: MachineConfig<
       }
     },
     championSelect: {
+      id: 'championSelect',
       on: {
         FINISH: 'finished',
+        TO_RUNE_SELECT: {
+          target: 'runeSelect',
+          cond: 'selectedChampion'
+        },
         ADD_CHAMPION: {
-          target: 'itemSelect',
           actions: ['addChampion']
+        },
+        TO_ITEM_SELECT: {
+          target: 'itemSelect',
+          cond: 'selectedChampion'
         },
         INIT: 'loading'
       }
     },
     itemSelect: {
+      id: 'itemSelect',
       on: {
-        RESELECT_CHAMPION: {
+        TO_CHAMPION_SELECT: {
           target: 'championSelect',
-          actions: ['reselectChampion']
+        },
+        TO_RUNE_SELECT: {
+          target: 'runeSelect',
+          cond: 'selectedChampion'
         },
         ADD_ITEM_TO_CHAMPION: {
-          target: 'itemSelect',
-          actions: ['logMessage','addItemToChampion']
+          actions: ['addItemToChampion']
         },
-        REMOVE_ITEM_FROM_CHAMPION: 'championSelect',
+        REMOVE_ITEM_FROM_CHAMPION: {
+          actions: ['removeItemFromChampion']
+        }
       }
     },
     runeSelect: {
-      on: {
-        RESELECT_CHAMPION: {
-          target: 'championSelect',
-          actions: ['reselectChampion']
+      id: 'runeSelect',
+      initial: 'init',
+      states: {
+        init: {
+          on: {
+            TO_CHAMPION_SELECT: {
+              target: '#championSelect'
+            },
+            TO_ITEM_SELECT: {
+              target: '#itemSelect',
+              cond: 'selectedChampion'
+            },
+          }
         },
-        SELECT_ITEM: {
-          
+        precision: {
+          on: {
+            TO_CHAMPION_SELECT: {
+              target: '#championSelect'
+            },
+            TO_ITEM_SELECT: {
+              target: '#itemSelect',
+              cond: 'selectedChampion'
+            },
+          }
+        },
+        domination: {
+          on: {
+            TO_CHAMPION_SELECT: {
+              target: '#championSelect'
+            },
+            TO_ITEM_SELECT: {
+              target: '#itemSelect',
+              cond: 'selectedChampion'
+            },
+          }
+        },
+        sorcery: {
+          on: {
+            TO_CHAMPION_SELECT: {
+              target: '#championSelect'
+            },
+            TO_ITEM_SELECT: {
+              target: '#itemSelect',
+              cond: 'selectedChampion'
+            },
+          }
+        },
+        resolve: {
+          on: {
+            TO_CHAMPION_SELECT: {
+              target: '#championSelect'
+            },
+            TO_ITEM_SELECT: {
+              target: '#itemSelect',
+              cond: 'selectedChampion'
+            },
+          }
+        },
+        inspiration: {
+          on: {
+            TO_CHAMPION_SELECT: {
+              target: '#championSelect'
+            },
+            TO_ITEM_SELECT: {
+              target: '#itemSelect',
+              cond: 'selectedChampion'
+            },
+          }
         }
       }
     },
