@@ -93,7 +93,10 @@
   </div>
   <div class="champion-details"
        [style.background]="'url(' + getSelectedChampionSplashArt() + ')'"
-       [ngStyle]="{}"
+       [ngStyle]="{
+            'background-size':'cover',
+            'background-repeat':'no-repeat'
+       }"
        *ngIf="!!state.context.selectedChampion">
     <div class="champion-items">
       <div *ngFor="let item of state.context.selectedChampion.items">
