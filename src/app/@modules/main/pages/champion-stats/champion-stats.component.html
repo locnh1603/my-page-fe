@@ -1,107 +1,113 @@
 <div class="champion-stats">
-  <div class="row champion-select p-0"
-       [ngClass]="{'d-none': !state.matches('championSelect')}">
-    <button class="col-12 header-button"
-            (click)="toRuneSelect()">To Rune</button>
-    <button class="col-12 header-button"
-            (click)="toItemSelect()">To Item</button>
-    <div *ngFor="let champion of state.context.champions"
-         (click)="onSelectChampion(champion)"
-         class="col-3 p-0">
-      <img [src]="getChampionIconUrl(champion)"
-           [alt]="champion.id"
-           class="champion-select-icon">
+  <div class="selector">
+    <div class="select-min"
+         [ngClass]="{'d-none': state.matches('championSelect')}">
+      <button class="w-100 h-100"
+              (click)="toChampionSelect()">
+        Champion
+      </button>
     </div>
-  </div>
-  <div class="row item-select p-0"
-       [ngClass]="{'d-none': !state.matches('itemSelect')}">
-    <button class="col-12 header-button"
-            (click)="toChampionSelect()">To Champ</button>
-    <button class="col-12 header-button"
-            (click)="toRuneSelect()">To Rune</button>
-    <div *ngFor="let item of state.context.items"
-         (click)="onSelectItem(item)"
-         class="col-3 p-0">
-      <img [src]="getItemIconUrl(item)"
-           [alt]="item.name"
-           class="item-select-icon">
-    </div>
-  </div>
-  <div class="rune-select p-0"
-       [ngClass]="{'d-none': !state.matches('runeSelect')}">
-    <button class="col-12 header-button"
-            (click)="toChampionSelect()">To Champ</button>
-    <button class="col-12 header-button"
-            (click)="toItemSelect()">To Item</button>
-    <div class="rune-select-grid col-12 p-0">
-      <div class="rune-page-selector">
-        <div *ngFor="let runeGroup of state.context.runes"
-             (click)="selectRunePage(runeGroup)"
-             [class]="'rune-page-selector-item'"
-             [ngClass]="{'d-none': runeGroup?.name === 'Unknown' }">
-          <img [src]="getRunesGroupIconUrl(runeGroup)"
-               [alt]="runeGroup?.name"
-               [ngClass]="{'d-none': runeGroup?.name === 'Unknown', 'selected': runeGroup?.name === selectedPage}">
-        </div>
-      </div>
-      <div class="rune-selector-major"
-           *ngIf="!!runes">
-        <div class="rune-major"
-             (click)="selectRune(rune, 0)"
-             *ngFor="let rune of runes.runes">
-          <img [src]="getRunesIconUrl(rune)"
-               [alt]="rune.name"
-               *ngIf="rune.type === 'major'"
-               class="major-rune-icon"
-               [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
-        </div>
-      </div>
-      <div class="rune-selector-row"
-           *ngIf="!!runes">
-        <div class="rune"
-             (click)="selectRune(rune, 1)"
-             *ngFor="let rune of firstRow">
-          <img [src]="getRunesIconUrl(rune)"
-               [alt]="rune.name"
-               class="minor-rune-icon"
-               [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
-        </div>
-      </div>
-      <div class="rune-selector-row"
-           *ngIf="!!runes">
-        <div class="rune"
-             (click)="selectRune(rune, 2)"
-             *ngFor="let rune of secondRow">
-          <img [src]="getRunesIconUrl(rune)"
-               [alt]="rune.name"
-               class="minor-rune-icon"
-               [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
-        </div>
-      </div>
-      <div class="rune-selector-row"
-           *ngIf="!!runes">
-        <div class="rune"
-             (click)="selectRune(rune, 3)"
-             *ngFor="let rune of thirdRow">
-          <img [src]="getRunesIconUrl(rune)"
-               [alt]="rune.name"
-               class="minor-rune-icon"
-               [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
-        </div>
+    <div class="row champion-select p-0 m-0"
+         [ngClass]="{'d-none': !state.matches('championSelect')}">
+      <div *ngFor="let champion of state.context.champions"
+           (click)="onSelectChampion(champion)"
+           class="col-3 p-0">
+        <img [src]="getChampionIconUrl(champion)"
+             [alt]="champion.id"
+             class="champion-select-icon">
       </div>
     </div>
+    <div class="select-min"
+         [ngClass]="{'d-none': state.matches('itemSelect')}">
+      <button class="w-100 h-100"
+              (click)="toItemSelect()">
+        Item
+      </button>
+    </div>
+    <div class="row item-select p-0 m-0"
+         [ngClass]="{'d-none': !state.matches('itemSelect')}">
+      <div *ngFor="let item of state.context.items"
+           (click)="onSelectItem(item)"
+           class="col-3 p-0">
+        <img [src]="getItemIconUrl(item)"
+             [alt]="item.name"
+             class="item-select-icon">
+      </div>
+    </div>
+
+    <div class="select-min"
+         [ngClass]="{'d-none': state.matches('runeSelect')}">
+      <button class="w-100 h-100"
+              (click)="toRuneSelect()">
+        Rune
+      </button>
+    </div>
+    <div class="rune-select p-0"
+         [ngClass]="{'d-none': !state.matches('runeSelect')}">
+      <div class="rune-select-grid col-12 p-0">
+        <div class="rune-page-selector">
+          <div *ngFor="let runeGroup of state.context.runes"
+               (click)="selectRunePage(runeGroup)"
+               [class]="'rune-page-selector-item'"
+               [ngClass]="{'d-none': runeGroup?.name === 'Unknown' }">
+            <img [src]="getRunesGroupIconUrl(runeGroup)"
+                 [alt]="runeGroup?.name"
+                 [ngClass]="{'d-none': runeGroup?.name === 'Unknown', 'selected': runeGroup?.name === selectedPage}">
+          </div>
+        </div>
+        <div class="rune-selector-major"
+             *ngIf="!!runes">
+          <div class="rune-major"
+               (click)="selectRune(rune, 0)"
+               *ngFor="let rune of runes.runes">
+            <img [src]="getRunesIconUrl(rune)"
+                 [alt]="rune.name"
+                 *ngIf="rune.type === 'major'"
+                 class="major-rune-icon"
+                 [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
+          </div>
+        </div>
+        <div class="rune-selector-row"
+             *ngIf="!!runes">
+          <div class="rune"
+               (click)="selectRune(rune, 1)"
+               *ngFor="let rune of firstRow">
+            <img [src]="getRunesIconUrl(rune)"
+                 [alt]="rune.name"
+                 class="minor-rune-icon"
+                 [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
+          </div>
+        </div>
+        <div class="rune-selector-row"
+             *ngIf="!!runes">
+          <div class="rune"
+               (click)="selectRune(rune, 2)"
+               *ngFor="let rune of secondRow">
+            <img [src]="getRunesIconUrl(rune)"
+                 [alt]="rune.name"
+                 class="minor-rune-icon"
+                 [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
+          </div>
+        </div>
+        <div class="rune-selector-row"
+             *ngIf="!!runes">
+          <div class="rune"
+               (click)="selectRune(rune, 3)"
+               *ngFor="let rune of thirdRow">
+            <img [src]="getRunesIconUrl(rune)"
+                 [alt]="rune.name"
+                 class="minor-rune-icon"
+                 [ngClass]="{'selected': !runes? false : runes.selectedRunes?.includes(rune)}">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="champion-details"
+
+
+  <div class="champion-details bg-fill"
        [style.background]="'url(' + getSelectedChampionSplashArt() + ')'"
-       [ngStyle]="{
-            'background-size':'cover',
-            'background-repeat':'no-repeat'
-       }"
-       *ngIf="!!state.context.selectedChampion">
-    <div class="champion-items">
-      <div *ngFor="let item of state.context.selectedChampion.items">
-        {{!item.name ? '' : item.name}}
-      </div>
-    </div>
+       [ngClass]="{'d-none': !state.context.selectedChampion}">
+    <app-champion-stats-details></app-champion-stats-details>
   </div>
 </div>
