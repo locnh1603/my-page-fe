@@ -4,6 +4,7 @@ import { ChampionStatsComponent } from '@modules/main/pages/champion-stats/champ
 import { ChampionStatsRoutingModule } from '@modules/main/pages/champion-stats/champion-stats-routing.module';
 import { ChampionStatsBiz } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.biz';
 import { CommonModule } from '@angular/common';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ChampionStatsDetailsComponent } from './components/champion-stats-details/champion-stats-details.component';
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ChampionStatsDetailsComponent } from './components/champion-stats-detai
     ChampionStatsRoutingModule,
     FormsModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProgressSpinnerModule
   ],
   providers: [
     ChampionStatsBiz

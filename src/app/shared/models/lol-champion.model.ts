@@ -60,7 +60,9 @@ export class ChampionInfo {
   }
 }
 
-export class ChampionSpell { }
+export class ChampionSpell {
+  name: string;
+}
 export class ChampionCompact {
   @Type(() => ChampionStats)
   stats: ChampionStats;

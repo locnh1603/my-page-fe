@@ -1,4 +1,7 @@
-<div class="champion-stats">
+<p-progressSpinner [style]="{width: '100%', height: '100vh'}"
+                   *ngIf="state.value==='loading'"></p-progressSpinner>
+<div class="champion-stats"
+     *ngIf="state.value!=='loading'">
   <div class="selector">
     <div class="select-min"
          [ngClass]="{'d-none': state.matches('championSelect')}">
@@ -108,6 +111,6 @@
   <div class="champion-details bg-fill"
        [style.background]="'url(' + getSelectedChampionSplashArt() + ')'"
        [ngClass]="{'d-none': !state.context.selectedChampion}">
-    <app-champion-stats-details></app-champion-stats-details>
+    <app-champion-stats-details [champion]="state.context.selectedChampion"></app-champion-stats-details>
   </div>
 </div>
