@@ -76,15 +76,7 @@ export const ChampionStatMachineConfig: MachineConfig<
       initial: 'init',
       states: {
         init: {
-          on: {
-            TO_CHAMPION_SELECT: {
-              target: '#championSelect'
-            },
-            TO_ITEM_SELECT: {
-              target: '#itemSelect',
-              cond: 'selectedChampion'
-            },
-          }
+          always: 'precision'
         },
         precision: {
           on: {
@@ -95,6 +87,18 @@ export const ChampionStatMachineConfig: MachineConfig<
               target: '#itemSelect',
               cond: 'selectedChampion'
             },
+            TO_RUNE_PAGE_DOMINATION: {
+              target: 'domination'
+            },
+            TO_RUNE_PAGE_INSPIRATION: {
+              target: 'inspirations'
+            },
+            TO_RUNE_PAGE_RESOLVE: {
+              target: 'resolve'
+            },
+            TO_RUNE_PAGE_SORCERY:{
+              target: 'sorcery'
+            }
           }
         },
         domination: {
@@ -106,6 +110,18 @@ export const ChampionStatMachineConfig: MachineConfig<
               target: '#itemSelect',
               cond: 'selectedChampion'
             },
+            TO_RUNE_PAGE_PRECISION: {
+              target: 'precision'
+            },
+            TO_RUNE_PAGE_INSPIRATION: {
+              target: 'inspirations'
+            },
+            TO_RUNE_PAGE_RESOLVE: {
+              target: 'resolve'
+            },
+            TO_RUNE_PAGE_SORCERY:{
+              target: 'sorcery'
+            }
           }
         },
         sorcery: {
@@ -117,6 +133,18 @@ export const ChampionStatMachineConfig: MachineConfig<
               target: '#itemSelect',
               cond: 'selectedChampion'
             },
+            TO_RUNE_PAGE_DOMINATION: {
+              target: 'domination'
+            },
+            TO_RUNE_PAGE_INSPIRATION: {
+              target: 'inspirations'
+            },
+            TO_RUNE_PAGE_RESOLVE: {
+              target: 'resolve'
+            },
+            TO_RUNE_PAGE_PRECISION:{
+              target: 'precision'
+            }
           }
         },
         resolve: {
@@ -128,9 +156,21 @@ export const ChampionStatMachineConfig: MachineConfig<
               target: '#itemSelect',
               cond: 'selectedChampion'
             },
+            TO_RUNE_PAGE_DOMINATION: {
+              target: 'domination'
+            },
+            TO_RUNE_PAGE_INSPIRATION: {
+              target: 'inspirations'
+            },
+            TO_RUNE_PAGE_PRECISION: {
+              target: 'precision'
+            },
+            TO_RUNE_PAGE_SORCERY:{
+              target: 'sorcery'
+            }
           }
         },
-        inspiration: {
+        inspirations: {
           on: {
             TO_CHAMPION_SELECT: {
               target: '#championSelect'
@@ -139,6 +179,18 @@ export const ChampionStatMachineConfig: MachineConfig<
               target: '#itemSelect',
               cond: 'selectedChampion'
             },
+            TO_RUNE_PAGE_DOMINATION: {
+              target: 'domination'
+            },
+            TO_RUNE_PAGE_PRECISION: {
+              target: 'precision'
+            },
+            TO_RUNE_PAGE_RESOLVE: {
+              target: 'resolve'
+            },
+            TO_RUNE_PAGE_SORCERY:{
+              target: 'sorcery'
+            }
           }
         }
       }

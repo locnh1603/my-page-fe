@@ -15,5 +15,10 @@ export enum ChampionStatsMachineEventsEnum {
   ToChampionSelect = 'TO_CHAMPION_SELECT',
   ToItemSelect = 'TO_ITEM_SELECT',
   ToRuneSelect = 'TO_RUNE_SELECT',
-  Finish = 'FINISH'
+  Finish = 'FINISH',
+  ToRunePagePrecision = 'TO_RUNE_PAGE_PRECISION',
+  ToRunePageSorcery = 'TO_RUNE_PAGE_SORCERY',
+  ToRunePageResolve = 'TO_RUNE_PAGE_RESOLVE',
+  ToRunePageDomination = 'TO_RUNE_PAGE_DOMINATION',
+  ToRunePageInspiration = 'TO_RUNE_PAGE_INSPIRATION'
 }

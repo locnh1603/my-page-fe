@@ -109,3 +109,27 @@ export enum RuneTypesEnum {
   Major = 'major',
   Minor = 'minor'
 }
+
+export enum RunePageFirstRowEnum {
+  Domination = 'Cheap Shot-Taste of Blood-Sudden Impact',
+  Resolve = 'Demolish-Font of Life-Shield Bash',
+  Inspirations = 'Hextech Flashtraption-Magical Footwear-Perfect Timing',
+  Sorcery = 'Nullifying Orb-Manaflow Band-Nimbus Cloak',
+  Precision = 'Overheal-Triumph-Presence of Mind'
+}
+
+export enum RunePageSecondRowEnum {
+  Domination = 'Zombie Ward-Ghost Poro-Eyeball Collection',
+  Resolve = 'Conditioning-Second Wind-Bone Plating',
+  Inspirations = "Future's Market-Minion Dematerializer-Biscuit Delivery",
+  Sorcery = 'Transcendence-Celerity-Absolute Focus',
+  Precision = 'Legend: Alacrity-Legend: Tenacity-Legend: Bloodline'
+}
+
+export enum RunePageThirdRowEnum {
+  Domination = 'Ravenous Hunter-Ingenious Hunter-Relentless Hunter-Ultimate Hunter',
+  Resolve = 'Overgrowth-Revitalize-Unflinching',
+  Inspirations = 'Cosmic Insight-Approach Velocity-Time Warp Tonic',
+  Sorcery = 'Scorch-Waterwalking-Gathering Storm',
+  Precision = 'Coup de Grace-Cut Down-Last Stand'
+}

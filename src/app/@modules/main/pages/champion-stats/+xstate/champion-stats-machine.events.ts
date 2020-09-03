@@ -78,14 +78,39 @@ export class ToItemSelect implements EventObject {
   constructor() { }
 }
 
+export class ToRunePagePrecision implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToRunePagePrecision;
+  constructor() { }
+}
+
+export class ToRunePageSorcery implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToRunePageSorcery;
+  constructor() { }
+}
+
+export class ToRunePageResolve implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToRunePageResolve;
+  constructor() { }
+}
+
+export class ToRunePageDomination implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToRunePageDomination;
+  constructor() { }
+}
+
+export class ToRunePageInspiration implements EventObject {
+  readonly type = ChampionStatsMachineEventsEnum.ToRunePageInspiration;
+  constructor() { }
+}
+
 export class Fail implements EventObject {
   readonly type = ChampionStatsMachineEventsEnum.Fail;
   constructor(public error: any) { }
 }
 
 export type ChampionStatsEvent = AddChampion | ToChampionSelect | RemoveItemFromChampion | FetchInitSuccess | ToItemSelect | ToRuneSelect
-  | AddItemToChampion | AddModifierToChampion | RemoveModifierFromChampion | ChangeChampionLevel | FetchChampionStatSuccess | Init | Finish | Fail;
-
+  | AddItemToChampion | AddModifierToChampion | RemoveModifierFromChampion | ChangeChampionLevel | FetchChampionStatSuccess | Init | Finish | Fail
+  | ToRunePageInspiration | ToRunePageDomination | ToRunePageResolve | ToRunePageSorcery | ToRunePagePrecision;
 export interface Errors {
   [key: string]: string;
 }

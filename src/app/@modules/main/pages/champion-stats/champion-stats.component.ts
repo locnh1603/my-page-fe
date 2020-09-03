@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChampionStatsBiz } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.biz';
 import { SafeSubscription } from 'shared/models/safe-subscription.model';
 import { ChampionCompact } from 'shared/models/lol-champion.model';
 import { Item } from 'shared/models/lol-item.model';
-import { Rune, RunesGrouped } from 'shared/models/lol-rune.model';
-import { SummonerSpell } from 'shared/models/lol-summoner-spells.model';
-import { combineLatest, forkJoin } from 'rxjs';
+import { Rune, RunesGrouped, RunesGroupedDisplay } from 'shared/models/lol-rune.model';
 import { cloneDeep } from 'lodash';
 import { RuneGroupsEnum } from 'shared/enums/runes.enum';
 import { environment } from 'environments/environment';
-import { State } from 'xstate';
+import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: 'ChampionStats-champion-stats',
@@ -19,11 +17,12 @@ import { State } from 'xstate';
 })
 export class ChampionStatsComponent implements OnInit, OnDestroy {
 
-  champions: ChampionCompact[];
-  items: Item[];
-  runes: Rune[];
-  summoners: SummonerSpell[];
-  state: State<any>;
+  runes: RunesGroupedDisplay;
+  selectedPage = '';
+  firstRow: Rune[];
+  secondRow: Rune[];
+  thirdRow: Rune[];
+  state: any;
 
   constructor(
     private championStatsBiz: ChampionStatsBiz,
@@ -42,8 +41,15 @@ export class ChampionStatsComponent implements OnInit, OnDestroy {
   registerSubscriptions() {
     this.safeSub.subs = [
       this.championStatsBiz.state$.subscribe(
-        (state: State<any>) => {
+        (state: any) => {
           this.state = cloneDeep(state);
+          if (typeof (state.value !== 'string')) {
+            this.runes = plainToClass(RunesGroupedDisplay ,state.context.runes.find(rg => rg.name.toLowerCase() === state.value.runeSelect));
+            this.firstRow = !this.runes ? [] : this.runes.getFirstRow();
+            this.secondRow = !this.runes ? [] : this.runes.getSecondRow();
+            this.thirdRow = !this.runes ? [] : this.runes.getThirdRow();
+            this.selectedPage = this.runes?.name;
+          };
           console.log('>>>>>>>>>>>>>>>> state-changed')
           console.log(this.state);
         }
@@ -119,5 +125,20 @@ export class ChampionStatsComponent implements OnInit, OnDestroy {
 
   toItemSelect() {
     this.championStatsBiz.toItemSelect();
+  }
+
+  selectRunePage(runeGroup: RunesGrouped) {
+    if (runeGroup.name !== this.runes.name) {
+      this.runes = null;
+    }
+    this.championStatsBiz.toRunePage(runeGroup);
+  }
+
+  selectRune(rune: Rune, row: number) {
+    if (!this.runes.selectedRunes) {
+      this.runes.selectedRunes = [];
+    }
+    this.runes.addRune(rune, row);
+    console.log(this.runes);
   }
 }

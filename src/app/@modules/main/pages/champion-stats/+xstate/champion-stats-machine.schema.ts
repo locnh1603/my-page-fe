@@ -16,7 +16,7 @@ export interface ChampionStatsSchema {
         precision: {};
         sorcery: {};
         resolve: {};
-        inspiration: {};
+        inspirations: {};
         domination: {};
       }
     };

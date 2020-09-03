@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, forkJoin } from 'rxjs';
 import { MachineOptions, Machine, interpret, assign } from 'xstate';
-import { ChampionStatsEvent, FetchInitSuccess, ToChampionSelect, AddChampion, AddItemToChampion, RemoveItemFromChampion, ToItemSelect, ToRuneSelect } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
+import { ChampionStatsEvent, FetchInitSuccess, ToChampionSelect, AddChampion, AddItemToChampion, RemoveItemFromChampion, ToItemSelect, ToRuneSelect, ToRunePagePrecision, ToRunePageDomination, ToRunePageResolve, ToRunePageSorcery, ToRunePageInspiration } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.events';
 import { ChampionStatContext, ChampionStatsSchema } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.schema';
 import { ChampionStatMachineConfig } from '@modules/main/pages/champion-stats/+xstate/champion-stats-machine.config';
 import { map } from 'rxjs/operators';
@@ -12,6 +12,8 @@ import { ChampionCompact } from 'shared/models/lol-champion.model';
 import { Item } from 'shared/models/lol-item.model';
 import { ChampionStatsDisplay } from '@modules/main/pages/champion-stats/models/champion-stats-display.model';
 import { cloneDeep } from 'lodash';
+import { RuneGroupsEnum } from 'shared/enums/runes.enum';
+import { RunesGrouped } from 'shared/models/lol-rune.model';
 
 @Injectable()
 export class ChampionStatsBiz {
@@ -116,6 +118,26 @@ export class ChampionStatsBiz {
 
   removeItemFromChampion(item: Item) {
     this.transition(new RemoveItemFromChampion(item));
+  }
+
+  toRunePage(runeGroup: RunesGrouped) {
+    switch (runeGroup.name) {
+      case RuneGroupsEnum.Precision:
+        this.transition(new ToRunePagePrecision());
+        break;
+      case RuneGroupsEnum.Domination:
+        this.transition(new ToRunePageDomination());
+        break;
+      case RuneGroupsEnum.Resolve:
+        this.transition(new ToRunePageResolve());
+        break;
+      case RuneGroupsEnum.Sorcery:
+        this.transition(new ToRunePageSorcery());
+        break;
+      case RuneGroupsEnum.Inspirations:
+        this.transition(new ToRunePageInspiration());
+        break;
+    }
   }
 
   get state$() {
